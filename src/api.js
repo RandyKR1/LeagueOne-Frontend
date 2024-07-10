@@ -68,11 +68,16 @@ class LeagueOneApi {
     return res;
   }
 
-
-  static async createMatch(leagueId, data) {
-    let res = await this.request(`leagues/${leagueId}/matches/create`, data, 'post');
+  static async getMatch(leagueId, matchId) {
+    let res = await this.request(`leagues/${leagueId}/matches/${matchId}`, { params: { leagueId } });
     return res;
   }
+
+  static async createMatch(leagueId, data) {
+    console.log(`Making API call to leagues/${leagueId}/matches/create with data:`, data);
+    let res = await this.request(`leagues/${leagueId}/matches/create`, data, 'post');
+    return res;
+}
 
   static async updateMatch(leagueId, matchId, data) {
     let res = await this.request(`leagues/${leagueId}/matches/${matchId}`, data, 'put');

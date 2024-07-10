@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import LeagueOneApi from "../api";
+import {Link} from "react-router-dom"
 
-const Matches = ({ leagueId }) => {
+const MatchList = ({ leagueId }) => {
   const [matches, setMatches] = useState([]);
 
   useEffect(() => {
@@ -16,21 +17,28 @@ const Matches = ({ leagueId }) => {
     fetchMatches();
   }, [leagueId]);
 
+  console.log(matches)
   return (
     <>
       <h1>Matches</h1>
       <ul>
         {matches.map(match => (
           <li key={match.id}>
-            {match.eventName}
+            <Link to={`/leagues/${leagueId}/matches/${match.id}`}>
+                {match.eventName}
+            </Link>
+
             {match.eventLocation}
             {match.eventResults}
             {match.teams}
         </li>
         ))}
       </ul>
+      <button>
+        <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link> 
+      </button>
     </>
   );
 };
 
-export default Matches;
+export default MatchList;
