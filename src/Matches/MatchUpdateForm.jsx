@@ -15,16 +15,12 @@ const MatchUpdateForm = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const { leagueId, matchId } = useParams(); // Pulls leagueId and matchId from the URL
-    console.log(
-            "League ID from URL:", leagueId,
-            "Match ID from URL:", matchId
-        );
 
     // Fetch existing match data on component mount
     useEffect(() => {
         const fetchMatch = async () => {
             try {
-                const match = await LeagueOneApi.getMatch(matchId);
+                const match = await LeagueOneApi.getMatch(leagueId, matchId);
                 setFormData({
                     eventName: match.eventName,
                     eventLocation: match.eventLocation,
@@ -53,12 +49,14 @@ const MatchUpdateForm = () => {
         e.preventDefault();
         try {
             const payload = { ...formData, creatorId: parseInt(formData.creatorId, 10) };
-            await LeagueOneApi.updateMatch(leagueId, matchId, payload);
-            navigate(`/leagues/${leagueId}/matches/${res.id}`);
+            console.log("Submitting form with payload:", payload);
+            const updatedMatch = await LeagueOneApi.updateMatch(leagueId, matchId, payload);
+            navigate(`/leagues/${leagueId}/matches/${matchId}`); // Navigate to the match detail page with the correct matchId
         } catch (err) {
             setError(err.response?.data?.error || err.message || "Something went wrong");
         }
     };
+
 
     return (
         <form onSubmit={handleSubmit}>

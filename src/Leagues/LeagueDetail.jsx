@@ -4,7 +4,7 @@ import LeagueOneApi from "../api";
 import MatchList from "../Matches/MatchList";
 
 
-const LeagueDetail = ({match}) => {
+const LeagueDetail = () => {
     const { id } = useParams();
     const [league, setLeague] = useState(null);
 

@@ -69,9 +69,9 @@ class LeagueOneApi {
   }
 
   static async getMatch(leagueId, matchId) {
-    let res = await this.request(`leagues/${leagueId}/matches/${matchId}`, { params: { leagueId } });
+    let res = await this.request(`leagues/${leagueId}/matches/${matchId}`);
     return res;
-  }
+}
 
   static async createMatch(leagueId, data) {
     console.log(`Making API call to leagues/${leagueId}/matches/create with data:`, data);

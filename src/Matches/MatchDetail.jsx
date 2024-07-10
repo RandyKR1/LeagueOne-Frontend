@@ -19,8 +19,6 @@ const MatchDetail = () => {
     fetchMatch();
   }, [leagueId, matchId]);
 
-  console.log(`League ID: ${leagueId}, Match ID: ${matchId}`)
-
   if (!match) {
     return <p>Loading...</p>; // Optional: Add loading indicator while waiting for API response
   }

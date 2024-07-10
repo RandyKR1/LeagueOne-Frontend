@@ -6,8 +6,13 @@ const Home = () => {
         <>
             <h1>This is the Home Page</h1>
 
-            <div>
+            <div style={{
+                display:'flex',
+                flexDirection:'column'
+            }}>
                 <Link to={'/leagues'}>Leagues</Link>
+                <Link to={'/teams'}>Teams</Link>
+                <Link to={'/users'}>Users</Link>
             </div>
         </>
     )

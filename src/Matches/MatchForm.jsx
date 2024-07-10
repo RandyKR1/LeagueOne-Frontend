@@ -29,7 +29,6 @@ const MatchForm = () => {
         e.preventDefault();
         try {
             const payload = { ...formData, creatorId: parseInt(formData.creatorId, 10) };
-            console.log("Submitting form with payload:", payload);
             let res = await LeagueOneApi.createMatch(leagueId, payload);
             if (res && res.id) {
                 navigate(`/leagues/${leagueId}/matches/${res.id}`);
