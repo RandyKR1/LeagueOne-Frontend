@@ -16,28 +16,38 @@ import TeamUpdateForm from "../Teams/TeamUpdateForm";
 import UserList from "../Users/UserList";
 import UserDetail from "../Users/UserDetail";
 import UserUpdateForm from "../Users/UserUpdateForm";
+import SignUp from "../Auth/SignUp";
+import Login from "../Auth/Login";
+import PrivateRoute from "./PrivateRoute";
+import Nav from "./Nav";
 
-const Routing = () => {
+const Routing = ({ signup, login, logout }) => {
     return (
         <>
+        <Nav logout={logout} />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/leagues" element={<LeagueList />} />
-                <Route path="/leagues/:id" element={<LeagueDetail />} />
-                <Route path="/leagues/create" element={<LeagueForm />} />
-                <Route path="/leagues/:id/update" element={<LegaueUpdateForm />} />
-                <Route path="/leagues/:leagueId/matches" element={<MatchList />} />
-                <Route path="/leagues/:leagueId/matches/:matchId" element={<MatchDetail />} />
-                <Route path="/leagues/:leagueId/matches/create" element={<MatchForm />} />
-                <Route path="/leagues/:leagueId/matches/:matchId/update" element={<MatchUpdateForm />} />
-                <Route path="/teams" element={<TeamList />} />
-                <Route path="/teams/:teamId" element={<TeamDetail />} />
-                <Route path="/teams/create" element={<TeamForm />}/>
-                <Route path="/teams/:teamId/update" element={<TeamUpdateForm />}/>
-                <Route path="/users" element={<UserList />}/>
-                <Route path="/users/:username" element={<UserDetail />} />
-                <Route path="/users/:username/update" element={<UserUpdateForm />} />
+                <Route path="/signup" element={<SignUp signup={signup} />} />
+                <Route path="/login" element={<Login login={login} />} />
+                <Route element={<PrivateRoute />}>
+                    <Route path="/leagues" element={<LeagueList />} />
+                    <Route path="/leagues/:id" element={<LeagueDetail />} />
+                    <Route path="/leagues/create" element={<LeagueForm />} />
+                    <Route path="/leagues/:id/update" element={<LegaueUpdateForm />} />
+                    <Route path="/leagues/:leagueId/matches" element={<MatchList />} />
+                    <Route path="/leagues/:leagueId/matches/:matchId" element={<MatchDetail />} />
+                    <Route path="/leagues/:leagueId/matches/create" element={<MatchForm />} />
+                    <Route path="/leagues/:leagueId/matches/:matchId/update" element={<MatchUpdateForm />} />
+                    <Route path="/teams" element={<TeamList />} />
+                    <Route path="/teams/:teamId" element={<TeamDetail />} />
+                    <Route path="/teams/create" element={<TeamForm />}/>
+                    <Route path="/teams/:teamId/update" element={<TeamUpdateForm />}/>
+                    <Route path="/users" element={<UserList />}/>
+                    <Route path="/users/:username" element={<UserDetail />} />
+                    <Route path="/users/:username/update" element={<UserUpdateForm />} />
+                </Route>
 
+                
             </Routes>
         </>
     )

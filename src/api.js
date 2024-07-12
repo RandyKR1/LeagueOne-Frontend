@@ -25,11 +25,12 @@ class LeagueOneApi {
     let res = await this.request('auth/register', data, 'post');
     return res;
   }
-
+  
   static async loginUser(data) {
-    let res = await this.request('auth/login', data, 'post');
-    return res;
+    let res = await this.request(`auth/token`, data, "post");
+    return res.token;
   }
+
 
   // League Routes
   static async getLeagues(filters) {
