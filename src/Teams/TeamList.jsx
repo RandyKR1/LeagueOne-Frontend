@@ -8,37 +8,36 @@ const TeamList = () => {
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                let res = await LeagueOneApi.getTeams({}); // {} for filters
+                let res = await LeagueOneApi.getTeams({});
                 setTeams(res);
             } catch (e) {
                 console.error(e);
             }
         };
+
         fetchTeams();
     }, []);
 
     return (
-        <>
+        <div className="container">
             <h1>Teams</h1>
-            <div>
-                <ul>
-                    {teams.length > 0 ? (
-                        teams.map((team) => (
-                            <li key={team.id}>
-                                <Link to={`/teams/${team.id}`}>
-                                    <h3>{team.name}</h3>
-                                </Link>
-                                <p>{team.description}</p>
-                                <p>Max Players: {team.maxPlayers}</p>
-                            </li>
-                        ))
-                    ) : (
-                        <p>No leagues found.</p>
-                    )}
-                </ul>
-            </div>
-        </>
+            <ul className="list">
+                {teams.length > 0 ? (
+                    teams.map((team) => (
+                        <li key={team.id}>
+                            <Link to={`/teams/${team.id}`}>
+                                <h3>{team.name}</h3>
+                            </Link>
+                            <p>{team.description}</p>
+                            <p>Max Players: {team.maxPlayers}</p>
+                        </li>
+                    ))
+                ) : (
+                    <p>No teams found.</p>
+                )}
+            </ul>
+        </div>
     );
-}
+};
 
-export default TeamList
+export default TeamList;
