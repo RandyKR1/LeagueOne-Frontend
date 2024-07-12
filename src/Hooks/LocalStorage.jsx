@@ -15,22 +15,28 @@ import { useState, useEffect } from "react";
  *   const [myThing, setMyThing] = useLocalStorage("myThing")
  */
 
+export const TOKEN_STORAGE_ID = "leagueone-token";
+
 const useLocalStorage =(key, firstValue = null) => {
   const initialValue = localStorage.getItem(key) || firstValue;
-
+  console.log("Step 2) localStorage initial value:", key);
+  
   const [item, setItem] = useState(initialValue);
 
   useEffect(function setKeyInLocalStorage() {
-    console.debug("hooks useLocalStorage useEffect", "item=", item);
-
     if (item === null) {
+      console.log('item is null')
       localStorage.removeItem(key);
     } else {
       localStorage.setItem(key, item);
     }
+    console.log('Step 4) LocalStorage: Updated token');
   }, [key, item]);
 
+  console.log("Step 3) localStorage returning:", item)
   return [item, setItem];
+  
 }
 
 export default useLocalStorage;
+

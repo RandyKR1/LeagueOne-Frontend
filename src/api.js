@@ -5,18 +5,24 @@ const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3001";
 class LeagueOneApi {
   static token;
 
-  static async request(endpoint, data = {}, method = "get") {
-    console.debug("API Call:", endpoint, data, method);
-
-    const url = `${BASE_URL}/${endpoint}`;
-    const headers = { Authorization: `Bearer ${LeagueOneApi.token}` };
+  // Modified request method to include the token in headers
+  static async request(endpoint, data = {}, method = 'get') {
+    console.log(`API Request: ${method.toUpperCase()} ${endpoint}`);
+    console.log(`API Request Data: `, data);
+    const url = `http://localhost:3001/${endpoint}`;
+    
+    // Added Authorization header with Bearer token
+    const headers = {
+      Authorization: `Bearer ${LeagueOneApi.token}`,
+    };
+    const params = (method === 'get') ? data : {};
 
     try {
-      return (await axios({ url, method, data, headers })).data;
-    } catch (err) {
-      console.error("API Error:", err.response);
-      let message = err.response.data.error.message;
-      throw Array.isArray(message) ? message : [message];
+      const res = await axios({ url, method, data, params, headers });
+      return res.data;
+    } catch (error) {
+      console.error('API Error:', error.response);
+      throw error.response.data;
     }
   }
 
@@ -25,6 +31,31 @@ class LeagueOneApi {
     let res = await this.request('auth/register', data, 'post');
     return res;
   }
+
+  // static async getCurrentUser(username) {
+  //   try {
+  //     let res = await this.request(`users/${username}`);
+  //     console.log('api.js static route called for user:', username)
+  //     return res.user; // Assuming response structure has a 'user' property
+  //   } catch (error) {
+  //     console.error('getCurrentUser failed:', error);
+  //     throw error;
+  //   }
+  // }
+
+  static async getCurrentUser(username) {
+    try {
+      let res = await this.request(`users/${username}`);
+      console.log(res.data)
+      console.log('api.js static route called for user:', username)
+      console.log('api.js response from backend:', res)
+      return res; // Assuming response structure has the user object directly
+    } catch (error) {
+      console.error('getCurrentUser failed:', error);
+      throw error;
+    }
+  }
+  
   
   static async loginUser(data) {
     let res = await this.request(`auth/token`, data, "post");

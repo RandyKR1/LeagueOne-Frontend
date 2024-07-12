@@ -1,77 +1,74 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom"
+import Alert from "../Common/Alert";
 import LeagueOneApi from "../api";
-import { useNavigate } from "react-router-dom";
-import useLocalStorage from "../Hooks/LocalStorage";
 
-const Login = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-  const [error, setError] = useState(null);
-  const [, setToken] = useLocalStorage("token");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const token = await LeagueOneApi.loginUser(formData);
-      console.log("Token:", token);
-      if (token) {
-        setToken(token);
-        navigate("/");
-      } else {
-        setError("No Token Found");
-      }
-    } catch (error) {
-      console.log("Error Response:", error); // Log the error for debugging
-      if (error.data) {
-        setError(error.data.error);
-      } else {
-        setError("An error occurred. Please try again later.");
-      }
+const LoginForm = ({login}) => {
+    const INITIAL_STATE = {
+        username: '',
+        password: ''
     }
-  };
 
-  return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
-};
+    const [formData, setFormData] = useState(INITIAL_STATE)
+    const [formErrors, setFormErrors] = useState([]);
+    const navigate = useNavigate();
 
-export default Login;
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormData(formData => ({
+            ...formData,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let res = await login(formData)
+        if(res.success){
+            navigate("/");
+        }else {
+            setFormErrors(res.errors);
+          }
+    }
+
+    return(
+        <div className="card-container">
+            <div className="auth-card">
+            <div className="auth-card-title">
+                <h2>Log In</h2>
+                </div>
+            <form 
+                onSubmit={handleSubmit}
+                className="auth-form">
+               
+                <div className="input-container">
+                    <label htmlFor="username">Username</label>
+                <br/>
+                    <input 
+                        onChange={handleChange}
+                        type="text"
+                        name="username"
+                        value={formData.username}
+                        required='True' />
+                </div>
+                <div className="input-container">
+                    <label htmlFor="password">Password</label>
+                <br/>
+                    <input 
+                        onChange={handleChange}
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        required='True' />
+                </div>
+
+                {formErrors.length ? <Alert messages={formErrors} /> : null}
+
+                <button className="auth-btn">Submit</button>
+            </form>
+            </div>
+        </div>
+    )
+}
+
+export default LoginForm

@@ -17,6 +17,7 @@ const PrivateRoute = () => {
   }, [currentUser, showAlert, setShowAlert]);
 
   if (!currentUser) {
+    console.log("No Current User")
     return (
       <>
         {showAlert && <Alert messages={alertMessages} />}
