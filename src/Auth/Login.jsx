@@ -32,7 +32,7 @@ const LoginForm = ({login}) => {
     }
 
     return(
-        <div className="card-container">
+        <div className="container">
             <div className="auth-card">
             <div className="auth-card-title">
                 <h2>Log In</h2>

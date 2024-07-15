@@ -21,16 +21,13 @@ function App() {
       console.log("Step 5) App.jsx: checking token in useEffect");
       if (token) {
         try {
-          console.log("Step 6) API.jsx useEffect found token:", token)
           let { username } = jwtDecode(token);
-          // Set the token on the LeagueOne model so it can use it for API calls
           LeagueOneApi.token = token;
           console.log("Step 7) Fetching current user with username:", username);
           let currentUser = await LeagueOneApi.getCurrentUser(username);
           setCurrentUser(currentUser);
-          console.log("Step 8) Current user received:", currentUser);
+          console.log("Current user received:", currentUser);
         } catch (err) {
-          console.log('App loadUserInfo: problem loading', err);
           setCurrentUser(null);
         }
       }
@@ -56,7 +53,6 @@ function App() {
   const login = async (data) => {
     try {
       let token = await LeagueOneApi.loginUser(data);
-      console.log("Step 1) Token received on login:", token);
       setToken(token); // Ensure this correctly updates the token state
       return { success: true };
     } catch (errors) {

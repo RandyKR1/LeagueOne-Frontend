@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import LeagueOneApi from "../api";
+import UserContext from "../Auth/UserContext";
 
 const MatchList = ({ leagueId }) => {
     const [matches, setMatches] = useState([]);
+    const { currentUser } = useContext(UserContext);
 
     useEffect(() => {
         const fetchMatches = async () => {
@@ -33,9 +35,13 @@ const MatchList = ({ leagueId }) => {
                     </li>
                 ))}
             </ul>
-            <button>
+
+            {currentUser.isLeagueAdmin && (
+                <button>
                 <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
-            </button>
+                </button>
+            )}
+            
         </div>
     );
 };

@@ -42,6 +42,7 @@ const LeagueForm = () => {
     
 
     return (
+        <div className="container">
         <form onSubmit={handleSubmit}>
             <label htmlFor="name">Name:</label>
             <input
@@ -77,6 +78,7 @@ const LeagueForm = () => {
             {error && <p>{error}</p>}
             <button type="submit">Create League</button>
         </form>
+        </div>
     );
 };
 

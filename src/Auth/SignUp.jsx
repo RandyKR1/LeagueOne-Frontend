@@ -39,6 +39,7 @@ const SignUp = () => {
     };
 
     return (
+        <div className="container">
         <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name:</label>
             <input
@@ -88,6 +89,7 @@ const SignUp = () => {
             {error && <p>{error}</p>}
             <button type="submit">Sign Up</button>
         </form>
+        </div>
     );
 };
 

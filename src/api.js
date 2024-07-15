@@ -46,9 +46,8 @@ class LeagueOneApi {
   static async getCurrentUser(username) {
     try {
       let res = await this.request(`users/${username}`);
-      console.log(res.data)
       console.log('api.js static route called for user:', username)
-      console.log('api.js response from backend:', res)
+      console.log("user data:", res.data)
       return res; // Assuming response structure has the user object directly
     } catch (error) {
       console.error('getCurrentUser failed:', error);

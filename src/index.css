@@ -28,7 +28,7 @@
 
 .container a {
   text-decoration: none;
-  color: white;
+  color: black;
   font-size: 16px;
 }
 
@@ -38,11 +38,16 @@
 
 .container {
   max-width: 800px;
-  margin: 20px auto;
+  margin: auto;
   padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .list {
@@ -73,4 +78,8 @@
 
 .button a:hover {
   background-color: #e0e0e0;
+}
+
+form{
+  display: contents;
 }

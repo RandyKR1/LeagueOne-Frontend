@@ -20,6 +20,10 @@ const UserDetail = () => {
     return (
         <div className="container">
             <h2>{user.firstName} {user.lastName}</h2>
+            <div>
+                <h3>{user.username}</h3>
+                <h3>{user.email}</h3>
+            </div>
         </div>
     );
 };

@@ -11,13 +11,13 @@ const PrivateRoute = () => {
 
   useEffect(() => {
     if (!currentUser && !showAlert) {
+      console.log("current user:",currentUser)
       setAlertMessages(['You must log in to view this page.']);
       setShowAlert(true);
     }
   }, [currentUser, showAlert, setShowAlert]);
 
   if (!currentUser) {
-    console.log("No Current User")
     return (
       <>
         {showAlert && <Alert messages={alertMessages} />}

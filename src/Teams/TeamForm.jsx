@@ -44,6 +44,7 @@ const TeamForm = () => {
     };
 
     return (
+        <div className="container">
         <form onSubmit={handleSubmit}>
             <label htmlFor="name">Name:</label>
             <input
@@ -80,6 +81,7 @@ const TeamForm = () => {
             {error.length > 0 && <p>{error}</p>}
             <button type="submit">Create Team</button>
         </form>
+        </div>
     );
 };
 
