@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import LeagueOneApi from "../api";
 
 const TeamDetail = () => {
@@ -8,8 +8,12 @@ const TeamDetail = () => {
 
     useEffect(() => {
         const getTeam = async () => {
-            let team = await LeagueOneApi.getTeamById(teamId);
-            setTeam(team);
+            try {
+                let team = await LeagueOneApi.getTeamById(teamId);
+                setTeam(team);
+            } catch (error) {
+                console.error("Error fetching team:", error);
+            }
         };
 
         getTeam();
@@ -22,8 +26,22 @@ const TeamDetail = () => {
             <h2>{team.name}</h2>
             <h4>{team.description}</h4>
             <h4>Max Players: {team.maxPlayers}</h4>
-            <h3>Admin: {team.adminId}</h3>
+            <h3>Admin: {team.admin?.firstName}</h3> {/* Display admin name if available */}
 
+            <button>
+                <Link to={`/teams/${teamId}/join`}>Join Team</Link>
+            </button>
+
+            <h3>Members:</h3>
+            {team.players && team.players.length > 0 ? (
+                <ul>
+                    {team.players.map(member => (
+                        <li key={member.id}>{member.firstName} {member.lastName}</li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No members in this team.</p>
+            )}
         </div>
     );
 };

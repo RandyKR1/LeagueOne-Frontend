@@ -20,6 +20,7 @@ import SignUp from "../Auth/SignUp";
 import Login from "../Auth/Login";
 import PrivateRoute from "./PrivateRoute";
 import Nav from "./Nav";
+import TeamJoin from "../Teams/TeamJoin";
 
 const Routing = ({ signup, login, logout }) => {
     return (
@@ -42,6 +43,7 @@ const Routing = ({ signup, login, logout }) => {
                     <Route path="/teams/:teamId" element={<TeamDetail />} />
                     <Route path="/teams/create" element={<TeamForm />}/>
                     <Route path="/teams/:teamId/update" element={<TeamUpdateForm />}/>
+                    <Route path="teams/:teamId/join" element={<TeamJoin />}/>
                     <Route path="/users" element={<UserList />}/>
                     <Route path="/users/:username" element={<UserDetail />} />
                     <Route path="/users/:username/update" element={<UserUpdateForm />} />
