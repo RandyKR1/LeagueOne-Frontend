@@ -30,7 +30,7 @@ const LeagueForm = () => {
         try {
             let res = await LeagueOneApi.createLeague(formData);
             if (res && res.id) {
-                navigate(`/leagues/${res.id}`);
+                navigate(`/leagues`);
             } else {
                 setError(["Failed to create league"]);
             }

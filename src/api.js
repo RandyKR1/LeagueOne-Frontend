@@ -105,7 +105,6 @@ class LeagueOneApi {
 }
 
   static async createMatch(leagueId, data) {
-    console.log(`Making API call to leagues/${leagueId}/matches/create with data:`, data);
     let res = await this.request(`leagues/${leagueId}/matches/create`, data, 'post');
     return res;
 }
@@ -132,6 +131,7 @@ class LeagueOneApi {
   }
 
   static async createTeam(data) {
+    console.log("Making API call to teams/create", data);
     let res = await this.request('teams/create', data, 'post');
     return res;
   }

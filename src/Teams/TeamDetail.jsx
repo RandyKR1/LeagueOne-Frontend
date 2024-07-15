@@ -22,6 +22,8 @@ const TeamDetail = () => {
             <h2>{team.name}</h2>
             <h4>{team.description}</h4>
             <h4>Max Players: {team.maxPlayers}</h4>
+            <h3>Admin: {team.adminId}</h3>
+
         </div>
     );
 };

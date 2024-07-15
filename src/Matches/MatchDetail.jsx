@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import LeagueOneApi from "../api";
 import UserContext from "../Auth/UserContext";
 
@@ -36,9 +36,9 @@ const MatchDetail = () => {
 
             {/* Render create match link only if user is league admin */}
             {currentUser.isLeagueAdmin && (
-                <a href={`/leagues/${leagueId}/matches/create`} className="btn btn-primary">
-                    Create Match
-                </a>
+                <button>
+                <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
+                </button>
             )}
         </div>
     );

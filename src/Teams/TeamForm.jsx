@@ -7,7 +7,6 @@ const TeamForm = () => {
         name: "",
         password: "",
         maxPlayers: 20,
-        leagueId: "" // Changed from league to leagueId
     };
 
     const [formData, setFormData] = useState(INITIAL_STATE);
@@ -18,7 +17,7 @@ const TeamForm = () => {
         const { name, value } = e.target;
         let updatedValue = value;
 
-        if (name === "maxPlayers" || name === "leagueId") {
+        if (name === "maxPlayers" ) {
             updatedValue = parseInt(value, 10) || ""; // Ensure integer conversion, fallback to empty string if NaN
         }
 
@@ -30,18 +29,20 @@ const TeamForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
+        console.log("Submitting form data:", formData);
         try {
-            let res = await LeagueOneApi.createTeam(formData);
-            if (res && res.id) {
-                navigate(`/teams/${res.id}`);
-            } else {
-                setError(["Failed to create team"]);
-            }
+          let res = await LeagueOneApi.createTeam(formData);
+          console.log("API Response:", res);
+          if (res && res.team && res.team.id) {
+            navigate(`/teams/${res.team.id}`);
+          } else {
+            setError(["Failed to create team"]);
+          }
         } catch (err) {
-            setError([err.message || "Something went wrong"]);
+          console.error("API Error:", err);
+          setError([err.message || "Something went wrong"]);
         }
-    };
+      };
 
     return (
         <div className="container">
@@ -68,14 +69,6 @@ const TeamForm = () => {
                 id="maxPlayers"
                 name="maxPlayers"
                 value={formData.maxPlayers}
-                onChange={handleChange}
-            />
-            <label htmlFor="leagueId">League ID:</label>
-            <input
-                type="number" // Changed from text to number
-                id="leagueId"
-                name="leagueId"
-                value={formData.leagueId}
                 onChange={handleChange}
             />
             {error.length > 0 && <p>{error}</p>}
