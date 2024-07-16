@@ -45,6 +45,38 @@ const UserDetail = () => {
               <p>No teams joined yet!</p>
             )}
           </div>
+
+          <div className="teams-list">
+            <h3>My Teams</h3>
+            {user.administeredTeams && user.administeredTeams.length > 0 ? (
+              <ul className="list">
+                {user.administeredTeams.map(team => (
+                  <li key={team.id}>
+                    {team.name}
+                    <br />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No teams created yet!</p>
+            )}
+          </div>
+
+          <div className="teams-list">
+            <h3>My Leagues</h3>
+            {user.administeredLeagues && user.administeredLeagues.length > 0 ? (
+              <ul className="list">
+                {user.administeredLeagues.map(league => (
+                  <li key={league.id}>
+                    {league.name}
+                    <br />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No leagues created yet!</p>
+            )}
+          </div>
     
           {currentUser && (
             <div className="actions">
