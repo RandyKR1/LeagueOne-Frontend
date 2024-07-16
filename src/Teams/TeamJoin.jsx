@@ -8,15 +8,15 @@ const TeamJoin = () => {
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [error, setError] = useState([]);
   const [message, setMessage] = useState("");
-  const [teamMembers, setTeamMembers] = useState([]);
+  const [team, setTeam] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTeamMembers = async () => {
+    const fetchTeam = async () => {
       const team = await LeagueOneApi.getTeamById(teamId);
-      setTeamMembers(team.players);
+      setTeam(team);
     };
-    fetchTeamMembers();
+    fetchTeam();
   }, [teamId]);
 
   const handleChange = (e) => {
@@ -38,7 +38,7 @@ const TeamJoin = () => {
       console.log("API Response:", res);
       if (res && res.message) {
         setMessage(res.message);
-        setTeamMembers(res.team.players); // Update team members
+        setTeam(res.team.players); // Update team members
         navigate(`/teams/${teamId}`); // Redirect to the team page
       } else {
         setError(["Failed to join team"]);

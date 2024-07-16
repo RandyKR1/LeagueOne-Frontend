@@ -60,6 +60,7 @@ const UserUpdateForm = () => {
     }
 
     return (
+        <div className="container">
         <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name:</label>
             <input
@@ -95,6 +96,7 @@ const UserUpdateForm = () => {
             {error && <p>{error}</p>}
             <button type="submit">Update User</button>
         </form>
+        </div>
     );
 };
 

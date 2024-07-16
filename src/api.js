@@ -125,6 +125,16 @@ class LeagueOneApi {
     return res;
   }
 
+  static async getTeamsForAdmin(userId) {
+    try {
+      let res = await this.request(`teams/admin/${userId}`);
+      return res;
+    } catch (error) {
+      console.error('Error retrieving teams for admin:', error);
+      throw error;
+    }
+  }
+
   static async getTeamById(id) {
     let res = await this.request(`teams/${id}`);
     return res;

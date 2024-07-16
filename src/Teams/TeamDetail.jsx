@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import LeagueOneApi from "../api";
+import UserContext from "../Auth/UserContext";
 
 const TeamDetail = () => {
+    const {currentUser} = useContext(UserContext)
     const { teamId } = useParams();
     const [team, setTeam] = useState(null);
 
@@ -24,23 +26,26 @@ const TeamDetail = () => {
     return (
         <div className="container">
             <h2>{team.name}</h2>
-            <h4>{team.description}</h4>
-            <h4>Max Players: {team.maxPlayers}</h4>
-            <h3>Admin: {team.admin?.firstName}</h3> {/* Display admin name if available */}
+            <p>{team.description}</p>
+            <p>Max Players: {team.maxPlayers}</p>
+            <p>Admin: {team.admin?.firstName}</p>
 
-            <button>
-                <Link to={`/teams/${teamId}/join`}>Join Team</Link>
-            </button>
+            <div className="actions">
+                    <Link className="button" to={`/teams/${teamId}/join`}>Join Team</Link>
+            </div>
 
             <h3>Members:</h3>
             {team.players && team.players.length > 0 ? (
-                <ul>
+                <ul className="list">
                     {team.players.map(member => (
                         <li key={member.id}>{member.firstName} {member.lastName}</li>
                     ))}
                 </ul>
             ) : (
                 <p>No members in this team.</p>
+        )}
+            {currentUser.isTeamAdmin && (
+                <Link className="button" to={`/teams/${teamId}/update`}>Update Team</Link>
             )}
         </div>
     );

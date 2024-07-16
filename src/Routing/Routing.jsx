@@ -21,6 +21,7 @@ import Login from "../Auth/Login";
 import PrivateRoute from "./PrivateRoute";
 import Nav from "./Nav";
 import TeamJoin from "../Teams/TeamJoin";
+import LeagueJoin from "../Leagues/LeagueJoin";
 
 const Routing = ({ signup, login, logout }) => {
     return (
@@ -35,6 +36,7 @@ const Routing = ({ signup, login, logout }) => {
                     <Route path="/leagues/:id" element={<LeagueDetail />} />
                     <Route path="/leagues/create" element={<LeagueForm />} />
                     <Route path="/leagues/:id/update" element={<LegaueUpdateForm />} />
+                    <Route path="/leagues/:id/join" element={<LeagueJoin />} />
                     <Route path="/leagues/:leagueId/matches" element={<MatchList />} />
                     <Route path="/leagues/:leagueId/matches/:matchId" element={<MatchDetail />} />
                     <Route path="/leagues/:leagueId/matches/create" element={<MatchForm />} />

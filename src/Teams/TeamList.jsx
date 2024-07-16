@@ -26,7 +26,7 @@ const TeamList = () => {
                     teams.map((team) => (
                         <li key={team.id}>
                             <Link to={`/teams/${team.id}`}>
-                                <h3>{team.name}</h3>
+                                <h3 className="button">{team.name}</h3>
                             </Link>
                             <p>{team.description}</p>
                             <p>Max Players: {team.maxPlayers}</p>

@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {Link} from "react-router-dom"
+import {Link } from "react-router-dom"
 import Home from "../Home/Home";
 import UserContext from "../Auth/UserContext";
 import Login from "../Auth/Login";
@@ -9,6 +9,7 @@ import LeagueList from "../Leagues/LeagueList";
 import TeamList from "../Teams/TeamList";
 import LeagueForm from "../Leagues/LeagueForm";
 import TeamForm from "../Teams/TeamForm";
+import UserDetail from "../Users/UserDetail";
 
 
 
@@ -25,6 +26,7 @@ const Nav = ({logout}) => {
                 <Link className="nav" to="/leagues/create" element={<LeagueForm />}>Create a League</Link>
                 <Link className="nav" to="/teams" element={<TeamList />}>Teams</Link>
                 <Link className="nav" to="/teams/create" element={<TeamForm />}>Create a Team</Link>
+                <Link className="nav" to={`/users/${currentUser.username}`} element={<UserDetail />}>{currentUser.username}</Link>
             </ul>
                 <div className="nav-logout">
                     <Link className="nav" to="/" onClick={logout}>Log Out</Link>

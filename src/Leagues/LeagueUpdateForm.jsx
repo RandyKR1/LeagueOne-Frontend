@@ -81,6 +81,7 @@ const LegaueUpdateForm = () => {
     }
 
     return (
+        <div className="container">
         <form onSubmit={handleSubmit}>
             <label htmlFor="name">Name:</label>
             <input
@@ -116,6 +117,7 @@ const LegaueUpdateForm = () => {
             {error && <p>{error}</p>}
             <button type="submit">Update League</button>
         </form>
+        </div>
     );
 };
 

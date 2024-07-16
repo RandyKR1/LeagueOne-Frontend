@@ -74,6 +74,7 @@ const TeamUpdateForm = () => {
     }
 
     return (
+        <div className="container">
         <form onSubmit={handleSubmit}>
             <label htmlFor="name">Name:</label>
             <input
@@ -102,6 +103,7 @@ const TeamUpdateForm = () => {
             {error && <p>{error}</p>}
             <button type="submit">Update Team</button>
         </form>
+        </div>
     );
 };
 

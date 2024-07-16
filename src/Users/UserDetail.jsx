@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
 import LeagueOneApi from "../api";
+import UserContext from "../Auth/UserContext";
 
 const UserDetail = () => {
+    const { currentUser } = useContext(UserContext);
     const { username } = useParams();
     const [user, setUser] = useState(null);
 
@@ -20,11 +22,18 @@ const UserDetail = () => {
     return (
         <div className="container">
             <h2>{user.firstName} {user.lastName}</h2>
-            <div>
-                <h3>{user.username}</h3>
-                <h3>{user.email}</h3>
-            </div>
+            <div className="details">
+                <p>{user.username}</p>
+                <p>{user.email}</p>
+                <p>{user.bio}</p>
         </div>
+    {currentUser && (
+        <div className="actions">
+            <Link className="button" to={`/users/${currentUser.username}/update`}>Update User</Link>
+        </div>
+    )}
+</div>
+
     );
 };
 

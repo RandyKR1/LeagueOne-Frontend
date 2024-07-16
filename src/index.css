@@ -1,39 +1,16 @@
 /* Nav.css */
 
-#root{
-  height:100vh;
-  width:100vw;
-
+#root {
+  height: 100vh;
+  width: 100vw;
 }
-.App{
+
+.App {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
   width: 100vw;
-}
-
-.container ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.container ul li {
-  margin-right: 20px;
-}
-
-.container a {
-  text-decoration: none;
-  color: black;
-  font-size: 16px;
-}
-
-.container a:hover {
-  text-decoration: underline;
 }
 
 .container {
@@ -48,6 +25,39 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.container p {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.container .details {
+  margin-bottom: 20px;
+}
+
+.container .actions {
+  margin-top: 20px;
+}
+
+.container .button {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container .button:hover {
+  background-color: #0056b3;
 }
 
 .list {
@@ -67,17 +77,18 @@
   margin-top: 20px;
 }
 
-.button a {
+.button {
   text-decoration: none;
-  color: #333;
+  color: white; /* White text color */
   padding: 10px 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  background-color: #007bff; /* Blue background color */
+  border: 1px solid #007bff; /* Blue border color */
   border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
 }
 
-.button a:hover {
-  background-color: #e0e0e0;
+.button :hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 form{

@@ -30,17 +30,19 @@ const MatchDetail = () => {
     return (
         <div className="container">
             <h1>Match Detail</h1>
-            <p>Event Name: {match.eventName}</p>
-            <p>Event Location: {match.eventLocation}</p>
-            <p>Event Results: {match.eventResults}</p>
+                <p>Event Name: {match.eventName}</p>
+                <p>Event Location: {match.eventLocation}</p>
+                <p>Event Results: {match.eventResults}</p>
 
-            {/* Render create match link only if user is league admin */}
-            {currentUser.isLeagueAdmin && (
-                <button>
-                <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
-                </button>
+                {currentUser.isLeagueAdmin && (
+                    <div className="actions">
+                        <button className="button">
+                            <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
+                        </button>
+                    </div>
             )}
         </div>
+
     );
 };
 

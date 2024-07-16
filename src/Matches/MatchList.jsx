@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import LeagueOneApi from "../api";
 import UserContext from "../Auth/UserContext";
 
-const MatchList = ({ leagueId }) => {
+
+const MatchList = () => {
     const [matches, setMatches] = useState([]);
     const { currentUser } = useContext(UserContext);
+    const {leagueId} = useParams();
 
     useEffect(() => {
         const fetchMatches = async () => {
