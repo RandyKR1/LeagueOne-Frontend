@@ -31,7 +31,10 @@ const TeamDetail = () => {
             <p>Admin: {team.admin?.firstName}</p>
 
             <div className="actions">
-                    <Link className="button" to={`/teams/${teamId}/join`}>Join Team</Link>
+                <Link className="button" to={`/teams/${teamId}/join`}>Join Team</Link>
+                {currentUser.isTeamAdmin && (
+                    <Link className="button" to={`/teams/${teamId}/update`}>Update Team</Link>
+                )}
             </div>
 
             <h3>Members:</h3>
@@ -43,9 +46,17 @@ const TeamDetail = () => {
                 </ul>
             ) : (
                 <p>No members in this team.</p>
-        )}
-            {currentUser.isTeamAdmin && (
-                <Link className="button" to={`/teams/${teamId}/update`}>Update Team</Link>
+            )}
+
+            <h3>Leagues Joined:</h3>
+            {team.leagues && team.leagues.length > 0 ? (
+                <ul className="list">
+                    {team.leagues.map(league => (
+                        <li key={league.id}>{league.name}</li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No leagues found</p>
             )}
         </div>
     );
