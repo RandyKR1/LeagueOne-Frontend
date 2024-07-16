@@ -67,7 +67,7 @@ class LeagueOneApi {
     let res = await this.request('leagues', { params: filters });
     return res;
   }
-
+  
   static async getLeagueById(id) {
     let res = await this.request(`leagues/${id}`);
     return res;

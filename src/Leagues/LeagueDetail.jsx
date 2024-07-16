@@ -1,28 +1,36 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import LeagueOneApi from "../api";
-import MatchList from "../Matches/MatchList";
 import UserContext from "../Auth/UserContext";
 
 const LeagueDetail = () => {
     const { id } = useParams();
     const [league, setLeague] = useState(null);
-    const [error, setError] = useState(null); // Add error state
+    const [teams, setTeams] = useState([]); // Ensure teams is initialized as an empty array
+    const [error, setError] = useState(null);
     const { currentUser } = useContext(UserContext);
+    const [loadingLeague, setLoadingLeague] = useState(true); 
 
+   
     useEffect(() => {
-        const getLeague = async () => {
+        const getLeagueById = async () => {
             try {
-                let league = await LeagueOneApi.getLeagueById(id);
-                setLeague(league);
+                setLoadingLeague(true);
+                const leagueData = await LeagueOneApi.getLeagueById(id);
+                setLeague(leagueData);
+                setLoadingLeague(false);
             } catch (err) {
-                setError(err); // Set error state
+                setError(err);
+                setLoadingLeague(false);
             }
         };
-        getLeague();
+        getLeagueById();
     }, [id]);
 
-    if (error) return <div>Error loading league details: {error.message}</div>; // Display error message
+
+  
+
+    if (error) return <div>Error loading league details: {error.message}</div>;
 
     if (!league) return <div>Loading...</div>;
 
@@ -35,16 +43,27 @@ const LeagueDetail = () => {
 
             <div className="actions">
                 <Link className="button" to={`/leagues/${league.id}/matches`}>View Matches</Link>
-                { /* Render LeagueJoin component if the current user is a team admin */}
                 {currentUser.isTeamAdmin && (
-                        <Link className="button" to={`/leagues/${league.id}/join`}>Join League</Link>
+                    <Link className="button" to={`/leagues/${league.id}/join`}>Join League</Link>
                 )}
                 {currentUser.isLeagueAdmin && (
-                        <Link className="button" to={`/leagues/${league.id}/update`}>Update League</Link>
+                    <Link className="button" to={`/leagues/${league.id}/update`}>Update League</Link>
                 )}
             </div>
-        </div>
 
+            <div className="teams-list">
+                <h3>Teams in {league.name}:</h3>
+                {league.teams && league.teams.length > 0 ? (
+                <ul className="list">
+                    {league.teams.map(team => (
+                        <li key={team.id}>{team.name}</li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No members in this team.</p>
+        )}
+            </div>
+        </div>
     );
 };
 
