@@ -29,10 +29,8 @@ const TeamForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitting form data:", formData);
         try {
           let res = await LeagueOneApi.createTeam(formData);
-          console.log("API Response:", res);
           if (res && res.team && res.team.id) {
             navigate(`/teams/${res.team.id}`);
           } else {

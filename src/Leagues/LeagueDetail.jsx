@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import LeagueOneApi from "../api";
 import UserContext from "../Auth/UserContext";
+import LeagueStandings from "./LeagueStandings"; // Import the LeagueStandings component
 
 const LeagueDetail = () => {
     const { id } = useParams();
@@ -11,7 +12,6 @@ const LeagueDetail = () => {
     const { currentUser } = useContext(UserContext);
     const [loadingLeague, setLoadingLeague] = useState(true); 
 
-   
     useEffect(() => {
         const getLeagueById = async () => {
             try {
@@ -27,12 +27,9 @@ const LeagueDetail = () => {
         getLeagueById();
     }, [id]);
 
-
-  
-
     if (error) return <div>Error loading league details: {error.message}</div>;
-
-    if (!league) return <div>Loading...</div>;
+    if (loadingLeague) return <div>Loading...</div>; // Use loadingLeague state here
+    if (!league) return <div>League not found</div>;
 
     return (
         <div className="container">
@@ -54,15 +51,18 @@ const LeagueDetail = () => {
             <div className="teams-list">
                 <h3>Teams in {league.name}:</h3>
                 {league.teams && league.teams.length > 0 ? (
-                <ul className="list">
-                    {league.teams.map(team => (
-                        <li key={team.id}>{team.name}</li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No members in this team.</p>
-        )}
+                    <ul className="list">
+                        {league.teams.map(team => (
+                            <li key={team.id}>{team.name}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No members in this team.</p>
+                )}
             </div>
+
+            {/* Integrate the LeagueStandings component */}
+            <LeagueStandings leagueId={id} />
         </div>
     );
 };

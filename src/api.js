@@ -32,17 +32,6 @@ class LeagueOneApi {
     return res;
   }
 
-  // static async getCurrentUser(username) {
-  //   try {
-  //     let res = await this.request(`users/${username}`);
-  //     console.log('api.js static route called for user:', username)
-  //     return res.user; // Assuming response structure has a 'user' property
-  //   } catch (error) {
-  //     console.error('getCurrentUser failed:', error);
-  //     throw error;
-  //   }
-  // }
-
   static async getCurrentUser(username) {
     try {
       let res = await this.request(`users/${username}`);
@@ -65,6 +54,11 @@ class LeagueOneApi {
   // League Routes
   static async getLeagues(filters) {
     let res = await this.request('leagues', { params: filters });
+    return res;
+  }
+
+  static async getStandingsByLeagueId(leagueId){
+    let res = await this.request(`leagues/${leagueId}/standings`)
     return res;
   }
   

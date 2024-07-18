@@ -32,7 +32,7 @@ const MatchDetail = () => {
             <h1>Match Detail</h1>
                 <p>Event Name: {match.eventName}</p>
                 <p>Event Location: {match.eventLocation}</p>
-                <p>Event Results: {match.eventResults}</p>
+                <p>Event Results: {match.participant1}: {match.participant1Score}</p>
 
                 {currentUser.isLeagueAdmin && (
                     <div className="actions">

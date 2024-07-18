@@ -7,7 +7,11 @@ const LegaueUpdateForm = () => {
         name: "",
         description: "",
         maxTeams: "",
-        password: ""
+        password: "",
+        competition: "", // Added competition field
+        firstPlacePoints: "", // Added points fields
+        secondPlacePoints: "",
+        thirdPlacePoints: ""
     };
 
     const { id } = useParams();
@@ -16,8 +20,6 @@ const LegaueUpdateForm = () => {
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [error, setError] = useState(null);
 
-
-    
     useEffect(() => {
         const fetchLeague = async () => {
             try {
@@ -27,7 +29,11 @@ const LegaueUpdateForm = () => {
                     name: fetchedLeague.name,
                     description: fetchedLeague.description,
                     maxTeams: fetchedLeague.maxTeams.toString(),
-                    password: "" // Optionally include password update logic
+                    password: "", // Optionally include password update logic
+                    competition: fetchedLeague.competition, // Set competition field
+                    firstPlacePoints: fetchedLeague.firstPlacePoints.toString(), // Set points fields
+                    secondPlacePoints: fetchedLeague.secondPlacePoints.toString(),
+                    drawPoints: fetchedLeague.drawPoints.toString()
                 });
             } catch (error) {
                 console.error("Error fetching league:", error);
@@ -39,9 +45,11 @@ const LegaueUpdateForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // Ensure maxTeams is parsed as an integer
-        const updatedValue = name === "maxTeams" ? parseInt(value) : value;
-        
+        // Ensure maxTeams and points fields are parsed as integers
+        const updatedValue = name === "maxTeams" || name === "firstPlacePoints" || name === "secondPlacePoints" || name === "drawPoints"
+            ? parseInt(value, 10)
+            : value;
+
         setFormData((f) => ({
             ...f,
             [name]: updatedValue
@@ -54,16 +62,9 @@ const LegaueUpdateForm = () => {
         // Check if the password field is empty
         const updatedPassword = formData.password.trim() === "" ? league.password : formData.password;
 
-
-        console.log("Submitting with formData:", formData);
-    
-        // Parse maxTeams to ensure it's an integer
-        const parsedMaxTeams = parseInt(formData.maxTeams, 10);
-    
         try {
             const updatedLeague = await LeagueOneApi.updateLeague(id, {
                 ...formData,
-                maxTeams: parsedMaxTeams,
                 password: updatedPassword
             });
             console.log("League updated:", updatedLeague);
@@ -73,8 +74,6 @@ const LegaueUpdateForm = () => {
             setError("Failed to update league");
         }
     };
-    
-    
 
     if (!league) {
         return <div>Loading...</div>;
@@ -82,41 +81,89 @@ const LegaueUpdateForm = () => {
 
     return (
         <div className="container">
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Name:</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-            />
-            <label htmlFor="password">Password:</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-            />
-            <label htmlFor="maxTeams">Max Teams:</label>
-            <input
-                type="number"
-                id="maxTeams"
-                name="maxTeams"
-                value={formData.maxTeams}
-                onChange={handleChange}
-            />
-            <label htmlFor="description">Description:</label>
-            <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-            />
-            {error && <p>{error}</p>}
-            <button type="submit">Update League</button>
-        </form>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="name">Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                />
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                />
+                <label htmlFor="maxTeams">Max Teams:</label>
+                <input
+                    type="number"
+                    id="maxTeams"
+                    name="maxTeams"
+                    value={formData.maxTeams}
+                    onChange={handleChange}
+                />
+
+                <label htmlFor="competition">Competition:</label>
+                <select
+                    id="competition"
+                    name="competition"
+                    value={formData.competition}
+                    onChange={handleChange}
+                >
+                    <option value="">Select Competition</option>
+                    <option value="Soccer">Soccer</option>
+                    <option value="Football">Football</option>
+                    <option value="Hockey">Hockey</option>
+                    <option value="Basketball">Basketball</option>
+                    <option value="Tennis">Tennis</option>
+                    <option value="Golf">Golf</option>
+                    <option value="Baseball">Baseball</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label htmlFor="description">Description:</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                />
+
+                <label htmlFor="firstPlacePoints">First Place Points:</label>
+                <input
+                    type="number"
+                    id="firstPlacePoints"
+                    name="firstPlacePoints"
+                    value={formData.firstPlacePoints}
+                    onChange={handleChange}
+                />
+
+                <label htmlFor="secondPlacePoints">Second Place Points:</label>
+                <input
+                    type="number"
+                    id="secondPlacePoints"
+                    name="secondPlacePoints"
+                    value={formData.secondPlacePoints}
+                    onChange={handleChange}
+                />
+
+                <label htmlFor="drawPoints">Third Place Points:</label>
+                <input
+                    type="number"
+                    id="drawPoints"
+                    name="drawPoints"
+                    value={formData.drawPoints}
+                    onChange={handleChange}
+                />
+
+                {error && <p>{error}</p>}
+
+                <button type="submit">Update League</button>
+            </form>
         </div>
     );
 };
