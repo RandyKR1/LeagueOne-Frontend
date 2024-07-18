@@ -12,6 +12,7 @@ const LeagueStandings = () => {
     const fetchStandings = async () => {
       try {
         const standingsData = await LeagueOneApi.getStandingsByLeagueId(id);
+        standingsData.sort((a, b) => b.points - a.points);
         setStandings(standingsData);
         setLoading(false);
       } catch (error) {
@@ -23,6 +24,7 @@ const LeagueStandings = () => {
 
     fetchStandings();
   }, [id]);
+
 
   if (loading) {
     return <div>Loading standings...</div>;

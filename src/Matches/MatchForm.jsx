@@ -61,8 +61,9 @@ const MatchForm = () => {
 
     try {
       let res = await LeagueOneApi.createMatch(leagueId, matchData);
-      if (res && res.id) {
-        navigate(`/leagues/${leagueId}/matches/${res.id}`);
+      console.log(res)
+      if (res.match && res.standings) {
+        navigate(`/leagues/${leagueId}/matches/${res.match.id}`);
       } else {
         setError("Failed to create match");
       }
