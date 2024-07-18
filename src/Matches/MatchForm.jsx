@@ -34,6 +34,8 @@ const MatchForm = () => {
     fetchTeams();
   }, [leagueId]);
 
+  console.log("Teams:", teams)
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -45,16 +47,16 @@ const MatchForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { participant1, participant2, participant1Score, participant2Score, eventLocation, eventType } = formData;
+    const { team1, team2, team1Score, team2Score, eventLocation, eventType } = formData;
 
     const matchData = {
       leagueId: parseInt(leagueId, 10),
       eventLocation,
       eventType,
-      participant1: parseInt(participant1, 10),
-      participant2: parseInt(participant2, 10),
-      participant1Score: parseInt(participant1Score, 10),
-      participant2Score: parseInt(participant2Score, 10)
+      team1: parseInt(team1, 10),
+      team2: parseInt(team2, 10),
+      team1Score: parseInt(team1Score, 10),
+      team2Score: parseInt(team2Score, 10)
     };
 
     try {
@@ -100,11 +102,11 @@ const MatchForm = () => {
           required
         />
 
-        <label htmlFor="participant1">Participant 1:</label>
+        <label htmlFor="team1">Home Team:</label>
         <select
-          id="participant1"
-          name="participant1"
-          value={formData.participant1}
+          id="team1"
+          name="team1"
+          value={formData.team1}
           onChange={handleChange}
           required
         >
@@ -116,11 +118,11 @@ const MatchForm = () => {
           ))}
         </select>
 
-        <label htmlFor="participant2">Participant 2:</label>
+        <label htmlFor="team2">Away Team:</label>
         <select
-          id="participant2"
-          name="participant2"
-          value={formData.participant2}
+          id="team2"
+          name="team2"
+          value={formData.team2}
           onChange={handleChange}
           required
         >
@@ -132,22 +134,22 @@ const MatchForm = () => {
           ))}
         </select>
 
-        <label htmlFor="participant1Score">Participant 1 Score:</label>
+        <label htmlFor="team1Score">Home Score:</label>
         <input
           type="number"
-          id="participant1Score"
-          name="participant1Score"
-          value={formData.participant1Score}
+          id="team1Score"
+          name="team1Score"
+          value={formData.team1Score}
           onChange={handleChange}
           required
         />
 
-        <label htmlFor="participant2Score">Participant 2 Score:</label>
+        <label htmlFor="team2Score">Away Score:</label>
         <input
           type="number"
-          id="participant2Score"
-          name="participant2Score"
-          value={formData.participant2Score}
+          id="team2Score"
+          name="team2Score"
+          value={formData.team2Score}
           onChange={handleChange}
           required
         />

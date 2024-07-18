@@ -25,6 +25,7 @@ const MatchDetail = () => {
         return <div>Loading...</div>;
     }
 
+    console.log(match.team1)
 
 
     return (
@@ -32,7 +33,7 @@ const MatchDetail = () => {
             <h1>Match Detail</h1>
                 <p>Event Name: {match.eventName}</p>
                 <p>Event Location: {match.eventLocation}</p>
-                <p>Event Results: {match.participant1}: {match.participant1Score}</p>
+                <p>Event Results: {match.team1}: {match.team1Score}</p>
 
                 {currentUser.isLeagueAdmin && (
                     <div className="actions">

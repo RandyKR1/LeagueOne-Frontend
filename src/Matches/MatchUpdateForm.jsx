@@ -59,60 +59,91 @@ const MatchUpdateForm = () => {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="eventName">Event Name:</label>
-            <input
-                type="text"
-                id="eventName"
-                name="eventName"
-                value={formData.eventName}
-                onChange={handleChange}
-                required
-            />
-
+        <div className="container">
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="eventType">Event Type:</label>
+            <select
+              id="eventType"
+              name="eventType"
+              value={formData.eventType}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Event Type</option>
+              <option value="Friendly">Friendly</option>
+              <option value="League">League</option>
+              <option value="Tournament">Tournament</option>
+              <option value="Final">Final</option>
+            </select>
+    
             <label htmlFor="eventLocation">Event Location:</label>
             <input
-                type="text"
-                id="eventLocation"
-                name="eventLocation"
-                value={formData.eventLocation}
-                onChange={handleChange}
-                required
+              type="text"
+              id="eventLocation"
+              name="eventLocation"
+              value={formData.eventLocation}
+              onChange={handleChange}
+              required
             />
-
-            <label htmlFor="eventType">Event Type:</label>
+    
+            <label htmlFor="team1">Home Team:</label>
+            <select
+              id="team1"
+              name="team1"
+              value={formData.team1}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Team</option>
+              {teams.map((team) => (
+                <option key={team.id} value={team.id}>
+                  {team.name}
+                </option>
+              ))}
+            </select>
+    
+            <label htmlFor="team2">Away Team:</label>
+            <select
+              id="team2"
+              name="team2"
+              value={formData.team2}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Team</option>
+              {teams.map((team) => (
+                <option key={team.id} value={team.id}>
+                  {team.name}
+                </option>
+              ))}
+            </select>
+    
+            <label htmlFor="team1">Home Score:</label>
             <input
-                type="text"
-                id="eventType"
-                name="eventType"
-                value={formData.eventType}
-                onChange={handleChange}
-                required
+              type="number"
+              id="team1"
+              name="team1"
+              value={formData.team1}
+              onChange={handleChange}
+              required
             />
-
-            <label htmlFor="eventResults">Event Results:</label>
-            <textarea
-                id="eventResults"
-                name="eventResults"
-                value={formData.eventResults}
-                onChange={handleChange}
-            />
-
-            <label htmlFor="creatorId">Creator ID:</label>
+    
+            <label htmlFor="team2Score">Away Score:</label>
             <input
-                type="number"
-                id="creatorId"
-                name="creatorId"
-                value={formData.creatorId}
-                onChange={handleChange}
-                required
+              type="number"
+              id="team2Score"
+              name="team2Score"
+              value={formData.team2Score}
+              onChange={handleChange}
+              required
             />
-
+    
             {error && <p>{error}</p>}
-
-            <button type="submit">Update Match</button>
-        </form>
-    );
+    
+            <button type="submit">Create Match</button>
+          </form>
+        </div>
+      );
 };
 
 export default MatchUpdateForm;

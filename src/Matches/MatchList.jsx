@@ -21,6 +21,8 @@ const MatchList = () => {
     fetchMatches();
   }, [leagueId]);
 
+  console.log("Matches:", matches)
+
   return (
     <div className="container">
       <h1>Matches</h1>
@@ -28,9 +30,9 @@ const MatchList = () => {
         <ul className="list">
           {matches.map((match) => (
             <li key={match.id}>
-              <p>{match.participant1.name} vs {match.participant2.name}</p>
+              <p>{match.homeTeam.name} vs {match.awayTeam.name}</p>
               <p>{match.eventLocation}</p>
-              <p>Event Results: {match.participant1.name}: {match.participant1Score} vs {match.participant2.name}: {match.participant2Score}</p>
+              <p>Event Results: {match.homeTeam.name}: {match.team1Score} vs {match.awayTeam.name}: {match.team2Score}</p>
             </li>
           ))}
         </ul>
