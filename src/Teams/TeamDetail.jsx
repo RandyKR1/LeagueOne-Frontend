@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import LeagueOneApi from "../api";
 import UserContext from "../Auth/UserContext";
 
@@ -7,6 +7,7 @@ const TeamDetail = () => {
     const {currentUser} = useContext(UserContext)
     const { teamId } = useParams();
     const [team, setTeam] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getTeam = async () => {
@@ -20,6 +21,15 @@ const TeamDetail = () => {
 
         getTeam();
     }, [teamId]);
+
+    const handleDelete = async () => {
+        try {
+            await LeagueOneApi.deleteTeam(teamId);
+            navigate(`/users/${currentUser.username}`);
+        } catch (error) {
+            console.error("Error deleting team:", error);
+        }
+    };
 
     if (!team) return <div>Loading...</div>;
 
@@ -53,10 +63,13 @@ const TeamDetail = () => {
                 <p>No leagues found</p>
             )}
             <div className="actions">
+            <Link className="button" to={`/teams/${teamId}/join`}>Join Team</Link>
                 {(currentUser.isTeamAdmin && currentUser.id === team.admin.id) && (
+                    <>
                     <Link className="button" to={`/teams/${teamId}/update`}>Update Team</Link>
-                )}  
-                    <Link className="button" to={`/teams/${teamId}/join`}>Join Team</Link>
+                    <button className="button" onClick={handleDelete}>Delete Team</button>
+                    </>
+                )}
             </div>
         </div>
     );

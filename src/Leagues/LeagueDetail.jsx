@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import LeagueOneApi from "../api";
 import UserContext from "../Auth/UserContext";
 import LeagueStandings from "./LeagueStandings"; // Import the LeagueStandings component
@@ -7,10 +7,10 @@ import LeagueStandings from "./LeagueStandings"; // Import the LeagueStandings c
 const LeagueDetail = () => {
     const { id } = useParams();
     const [league, setLeague] = useState(null);
-    const [teams, setTeams] = useState([]); // Ensure teams is initialized as an empty array
     const [error, setError] = useState(null);
     const { currentUser } = useContext(UserContext);
     const [loadingLeague, setLoadingLeague] = useState(true); 
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getLeagueById = async () => {
@@ -26,6 +26,15 @@ const LeagueDetail = () => {
         };
         getLeagueById();
     }, [id]);
+
+    const handleDelete = async () => {
+        try {
+            await LeagueOneApi.deleteLeague(id);
+            navigate(`/users/${currentUser.username}`);
+        } catch (error) {
+            console.error("Error deleting team:", error);
+        }
+    };
 
     if (error) return <div>Error loading league details: {error.message}</div>;
     if (loadingLeague) return <div>Loading...</div>; // Use loadingLeague state here
@@ -46,7 +55,10 @@ const LeagueDetail = () => {
                     <Link className="button" to={`/leagues/${league.id}/join`}>Join League</Link>
                 )} 
                 {(currentUser.isLeagueAdmin && currentUser.id === league.admin.id) && (
+                    <>
                     <Link className="button" to={`/leagues/${league.id}/update`}>Update League</Link>
+                    <button className="button" onClick={handleDelete}>Delete League</button>
+                    </>
                 )}
             </div>
 
