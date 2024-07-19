@@ -23,20 +23,14 @@ const TeamDetail = () => {
 
     if (!team) return <div>Loading...</div>;
 
+    console.log("Team Details:",team)
+
     return (
         <div className="container">
             <h2>{team.name}</h2>
             <p>{team.description}</p>
             <p>Max Players: {team.maxPlayers}</p>
             <p>Admin: {team.admin?.firstName}</p>
-
-            <div className="actions">
-                <Link className="button" to={`/teams/${teamId}/join`}>Join Team</Link>
-                {currentUser.isTeamAdmin && (
-                    <Link className="button" to={`/teams/${teamId}/update`}>Update Team</Link>
-                )}
-            </div>
-
             <h3>Members:</h3>
             {team.players && team.players.length > 0 ? (
                 <ul className="list">
@@ -58,6 +52,12 @@ const TeamDetail = () => {
             ) : (
                 <p>No leagues found</p>
             )}
+            <div className="actions">
+                {(currentUser.isTeamAdmin && currentUser.id === team.admin.id) && (
+                    <Link className="button" to={`/teams/${teamId}/update`}>Update Team</Link>
+                )}  
+                    <Link className="button" to={`/teams/${teamId}/join`}>Join Team</Link>
+            </div>
         </div>
     );
 };

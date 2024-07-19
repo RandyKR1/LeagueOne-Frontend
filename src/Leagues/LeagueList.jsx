@@ -17,6 +17,7 @@ const LeagueList = () => {
         fetchLeagues();
     }, []);
 
+    console.log(leagues)
     return (
         <div className="container">
             <h1>Leagues</h1>
@@ -29,6 +30,7 @@ const LeagueList = () => {
                             </Link>
                             <p>{league.description}</p>
                             <p>Max Teams: {league.maxTeams}</p>
+                            <p>Admin: {league.admin.firstName} {" "} {league.admin.lastName}</p>
                         </li>
                     ))
                 ) : (

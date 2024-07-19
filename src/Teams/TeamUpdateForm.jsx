@@ -6,7 +6,7 @@ const TeamUpdateForm = () => {
     const INITIAL_STATE = {
         name: "",
         password: "",
-        maxPlayers: ""
+        maxPlayers: 20,
     };
 
     const { teamId } = useParams();
@@ -22,8 +22,8 @@ const TeamUpdateForm = () => {
                 setTeam(fetchedTeam);
                 setFormData({
                     name: fetchedTeam.name,
-                    maxPlayers: fetchedTeam.maxPlayers.toString(),
-                    password: "" // Optionally include password update logic
+                    password: "", // Leave password field blank for security reasons
+                    maxPlayers: fetchedTeam.maxPlayers,
                 });
             } catch (error) {
                 console.error("Error fetching team:", error);
@@ -35,34 +35,27 @@ const TeamUpdateForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // Ensure maxPlayers is parsed as an integer
-        const updatedValue = name === "maxPlayers" ? parseInt(value) : value;
-        
-        setFormData((f) => ({
-            ...f,
+        let updatedValue = value;
+
+        if (name === "maxPlayers") {
+            updatedValue = value === "" ? "" : parseInt(value, 10);
+        }
+
+        setFormData((prevData) => ({
+            ...prevData,
             [name]: updatedValue
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log("Submitting with formData:", formData);
-    
-        // Parse maxTeams to ensure it's an integer
-        const parsedMaxPlayers = parseInt(formData.maxPlayers, 10);
-
-        // Check if the password field is empty
         const updatedPassword = formData.password.trim() === "" ? team.password : formData.password;
-
         try {
             const updatedTeam = await LeagueOneApi.updateTeam(teamId, {
                 ...formData,
-                maxPlayers: parsedMaxPlayers,
                 password: updatedPassword
             });
-            console.log("Team updated:", updatedTeam);
-            navigate(`/teams/${teamId}`); // Redirect to team detail page after update
+            navigate(`/teams/${teamId}`);
         } catch (error) {
             console.error("Error updating team:", error);
             setError("Failed to update team");
@@ -75,34 +68,34 @@ const TeamUpdateForm = () => {
 
     return (
         <div className="container">
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Name:</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-            />
-            <label htmlFor="password">Password:</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-            />
-            <label htmlFor="maxPlayers">Max Players:</label>
-            <input
-                type="number"
-                id="maxPlayers"
-                name="maxPlayers"
-                value={formData.maxPlayers}
-                onChange={handleChange}
-            />
-            {error && <p>{error}</p>}
-            <button type="submit">Update Team</button>
-        </form>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="name">Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                />
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                />
+                <label htmlFor="maxPlayers">Max Players:</label>
+                <input
+                    type="number"
+                    id="maxPlayers"
+                    name="maxPlayers"
+                    value={formData.maxPlayers}
+                    onChange={handleChange}
+                />
+                {error && <p>{error}</p>}
+                <button type="submit">Update Team</button>
+            </form>
         </div>
     );
 };

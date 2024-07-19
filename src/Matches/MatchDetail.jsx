@@ -25,13 +25,9 @@ const MatchDetail = () => {
         return <div>Loading...</div>;
     }
 
-    console.log(match.team1)
-
-
     return (
         <div className="container">
             <h1>Match Detail</h1>
-                <p>Event Name: {match.eventName}</p>
                 <p>Event Location: {match.eventLocation}</p>
                 <div>
                     <h2>Event Results</h2>
@@ -40,8 +36,11 @@ const MatchDetail = () => {
                         <p>{match.awayTeam.name}:{match.team2Score}</p>
                 </div>
 
-                {currentUser.isLeagueAdmin && (
+                {(currentUser.isLeagueAdmin && currentUser.id === match.league.adminId) && (
                     <div className="actions">
+                        <button className="button">
+                            <Link to={`/leagues/${leagueId}/matches/${matchId}/update`}>Update</Link>
+                        </button>
                         <button className="button">
                             <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
                         </button>

@@ -3,11 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import UserApi from "../api";
 
 const UserUpdateForm = () => {
+    
     const INITIAL_STATE = {
         firstName: "",
         lastName: "",
         email: "",
-        bio: ""
+        bio: "",
+        password: "",
     };
 
     const { username } = useParams();
@@ -20,12 +22,14 @@ const UserUpdateForm = () => {
         const fetchUser = async () => {
             try {
                 const fetchedUser = await UserApi.getUserByUsername(username);
+                console.log(fetchedUser)
                 setUser(fetchedUser);
                 setFormData({
                     firstName: fetchedUser.firstName,
                     lastName: fetchedUser.lastName,
                     email: fetchedUser.email,
-                    bio: fetchedUser.bio || ""
+                    bio: fetchedUser.bio || "",
+                    password: "" // Leave password field blank for security reasons
                 });
             } catch (error) {
                 console.error("Error fetching user:", error);
@@ -45,8 +49,12 @@ const UserUpdateForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const updatedPassword = formData.password.trim() === "" ? user.password : formData.password;
         try {
-            const updatedUser = await UserApi.updateUser(username, formData);
+            const updatedUser = await UserApi.updateUser(username, {
+                ...formData,
+                password: updatedPassword
+            });
             console.log("User updated:", updatedUser);
             navigate(`/users/${username}`); // Redirect to user detail page after update
         } catch (error) {
@@ -61,41 +69,49 @@ const UserUpdateForm = () => {
 
     return (
         <div className="container">
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="firstName">First Name:</label>
-            <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-            />
-            <label htmlFor="lastName">Last Name:</label>
-            <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-            />
-            <label htmlFor="email">Email:</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-            />
-            <label htmlFor="bio">Bio:</label>
-            <textarea
-                id="bio"
-                name="bio"
-                value={formData.bio}
-                onChange={handleChange}
-            />
-            {error && <p>{error}</p>}
-            <button type="submit">Update User</button>
-        </form>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="firstName">First Name:</label>
+                <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                />
+                <label htmlFor="lastName">Last Name:</label>
+                <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                />
+                <label htmlFor="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                />
+                <label htmlFor="bio">Bio:</label>
+                <textarea
+                    id="bio"
+                    name="bio"
+                    value={formData.bio}
+                    onChange={handleChange}
+                />
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                />
+                {error && <p>{error}</p>}
+                <button type="submit">Update User</button>
+            </form>
         </div>
     );
 };

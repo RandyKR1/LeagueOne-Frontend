@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import LeagueOneApi from "../api";
 
-const LegaueUpdateForm = () => {
+const LeagueUpdateForm = () => {
     const INITIAL_STATE = {
         name: "",
         description: "",
         maxTeams: "",
         password: "",
-        competition: "", // Added competition field
-        firstPlacePoints: "", // Added points fields
+        competition: "",
+        firstPlacePoints: "",
         secondPlacePoints: "",
-        thirdPlacePoints: ""
+        drawPoints: ""
     };
 
     const { id } = useParams();
@@ -27,13 +27,13 @@ const LegaueUpdateForm = () => {
                 setLeague(fetchedLeague);
                 setFormData({
                     name: fetchedLeague.name,
-                    description: fetchedLeague.description,
-                    maxTeams: fetchedLeague.maxTeams.toString(),
-                    password: "", // Optionally include password update logic
-                    competition: fetchedLeague.competition, // Set competition field
-                    firstPlacePoints: fetchedLeague.firstPlacePoints.toString(), // Set points fields
-                    secondPlacePoints: fetchedLeague.secondPlacePoints.toString(),
-                    drawPoints: fetchedLeague.drawPoints.toString()
+                    description: fetchedLeague.description || "",
+                    maxTeams: fetchedLeague.maxTeams,
+                    password: "", // Leave password field blank for security reasons
+                    competition: fetchedLeague.competition,
+                    firstPlacePoints: fetchedLeague.firstPlacePoints,
+                    secondPlacePoints: fetchedLeague.secondPlacePoints,
+                    drawPoints: fetchedLeague.drawPoints
                 });
             } catch (error) {
                 console.error("Error fetching league:", error);
@@ -45,30 +45,28 @@ const LegaueUpdateForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // Ensure maxTeams and points fields are parsed as integers
-        const updatedValue = name === "maxTeams" || name === "firstPlacePoints" || name === "secondPlacePoints" || name === "drawPoints"
-            ? parseInt(value, 10)
-            : value;
+        let updatedValue = value;
 
-        setFormData((f) => ({
-            ...f,
+        // Convert specific fields to integers, allowing 0 as a valid value
+        if (["maxTeams", "firstPlacePoints", "secondPlacePoints", "drawPoints"].includes(name)) {
+            updatedValue = value === "" ? "" : parseInt(value, 10);
+        }
+
+        setFormData((prevData) => ({
+            ...prevData,
             [name]: updatedValue
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Check if the password field is empty
         const updatedPassword = formData.password.trim() === "" ? league.password : formData.password;
-
         try {
             const updatedLeague = await LeagueOneApi.updateLeague(id, {
                 ...formData,
                 password: updatedPassword
             });
-            console.log("League updated:", updatedLeague);
-            navigate(`/leagues/${id}`); // Redirect to league detail page after update
+            navigate(`/leagues/${id}`);
         } catch (error) {
             console.error("Error updating league:", error);
             setError("Failed to update league");
@@ -89,7 +87,9 @@ const LegaueUpdateForm = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    required
                 />
+
                 <label htmlFor="password">Password:</label>
                 <input
                     type="password"
@@ -98,6 +98,7 @@ const LegaueUpdateForm = () => {
                     value={formData.password}
                     onChange={handleChange}
                 />
+
                 <label htmlFor="maxTeams">Max Teams:</label>
                 <input
                     type="number"
@@ -105,6 +106,7 @@ const LegaueUpdateForm = () => {
                     name="maxTeams"
                     value={formData.maxTeams}
                     onChange={handleChange}
+                    required
                 />
 
                 <label htmlFor="competition">Competition:</label>
@@ -113,6 +115,7 @@ const LegaueUpdateForm = () => {
                     name="competition"
                     value={formData.competition}
                     onChange={handleChange}
+                    required
                 >
                     <option value="">Select Competition</option>
                     <option value="Soccer">Soccer</option>
@@ -151,7 +154,7 @@ const LegaueUpdateForm = () => {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="drawPoints">Third Place Points:</label>
+                <label htmlFor="drawPoints">Draw Points:</label>
                 <input
                     type="number"
                     id="drawPoints"
@@ -168,4 +171,4 @@ const LegaueUpdateForm = () => {
     );
 };
 
-export default LegaueUpdateForm;
+export default LeagueUpdateForm;

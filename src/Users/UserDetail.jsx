@@ -19,7 +19,7 @@ const UserDetail = () => {
 
     if (!user) return <div>Loading...</div>;
 
-    console.log(user.teams)
+    console.log(user)
 
     return (
         <div className="container">
@@ -36,9 +36,12 @@ const UserDetail = () => {
               <ul className="list">
                 {user.teams.map(team => (
                   <li key={team.id}>
-                    {team.name}
-                    <br />
-                  </li>
+                  <button className="button">
+                    <Link to={`/teams/${team.id}`}>
+                      {team.name}
+                  </Link>
+                  </button>
+                </li>
                 ))}
               </ul>
             ) : (
@@ -52,8 +55,11 @@ const UserDetail = () => {
               <ul className="list">
                 {user.administeredTeams.map(team => (
                   <li key={team.id}>
-                    {team.name}
-                    <br />
+                    <button className="button">
+                      <Link to={`/teams/${team.id}`}>
+                        {team.name}
+                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -68,9 +74,12 @@ const UserDetail = () => {
               <ul className="list">
                 {user.administeredLeagues.map(league => (
                   <li key={league.id}>
-                    {league.name}
-                    <br />
-                  </li>
+                  <button className="button">
+                    <Link to={`/leagues/${league.id}`}>
+                      {league.name}
+                  </Link>
+                  </button>
+                </li>
                 ))}
               </ul>
             ) : (

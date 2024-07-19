@@ -31,19 +31,21 @@ const LeagueDetail = () => {
     if (loadingLeague) return <div>Loading...</div>; // Use loadingLeague state here
     if (!league) return <div>League not found</div>;
 
+    console.log(league)
+
     return (
         <div className="container">
             <h2>{league.name}</h2>
             <p>{league.description}</p>
             <p>Max Teams: {league.maxTeams}</p>
-            <p>League Admin: {league.admin.id}</p>
+            <p>League Admin: {league.admin.firstName} {" "} {league.admin.lastName}</p>
 
             <div className="actions">
-                <Link className="button" to={`/leagues/${league.id}/matches`}>View Matches</Link>
+                    <Link className="button" to={`/leagues/${league.id}/matches`}>View Matches</Link>
                 {currentUser.isTeamAdmin && (
                     <Link className="button" to={`/leagues/${league.id}/join`}>Join League</Link>
-                )}
-                {currentUser.isLeagueAdmin && (
+                )} 
+                {(currentUser.isLeagueAdmin && currentUser.id === league.admin.id) && (
                     <Link className="button" to={`/leagues/${league.id}/update`}>Update League</Link>
                 )}
             </div>
