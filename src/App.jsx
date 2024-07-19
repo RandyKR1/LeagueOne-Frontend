@@ -1,81 +1,79 @@
-import React, {useState, useEffect} from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import './App.css'
-import Routing from './Routing/Routing'
-import useLocalStorage from './Hooks/LocalStorage'
-import {jwtDecode} from "jwt-decode"
-import UserContext from "./Auth/UserContext"
-import LeagueOneApi from './api'
+// App.js
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import './App.css';
+import Routing from './Routing/Routing';
+import useLocalStorage from './Hooks/LocalStorage';
+import {jwtDecode} from 'jwt-decode';
+import UserContext from './Auth/UserContext';
+import LeagueOneApi from './api';
 
 const TOKEN_STORAGE_ID = "leagueone-token";
 
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
-  const [infoLoaded, setInfoLoaded] = useState(false);
-  
+  const [loading, setLoading] = useState(true);  // Change to manage loading state
 
   useEffect(() => {
-
-    const getCurrentUser = async () => {
-      console.log("Step 5) App.jsx: checking token in useEffect");
+    const fetchCurrentUser = async () => {
       if (token) {
         try {
-          let { username } = jwtDecode(token);
+          const decoded = jwtDecode(token);
           LeagueOneApi.token = token;
-          console.log("Step 7) Fetching current user with username:", username);
-          let currentUser = await LeagueOneApi.getCurrentUser(username);
-          setCurrentUser(currentUser);
-          console.log("Current user received:", currentUser);
-        } catch (err) {
+          const user = await LeagueOneApi.getCurrentUser(decoded.username);
+          setCurrentUser(user);
+        } catch (error) {
+          console.error("Error fetching current user", error);
           setCurrentUser(null);
         }
+      } else {
+        setCurrentUser(null);
       }
-      setInfoLoaded(true);
-    }
+      setLoading(false);
+    };
 
-    // Set infoLoaded to false while async getCurrentUser runs
-    setInfoLoaded(false);
-    getCurrentUser();
+    fetchCurrentUser();
   }, [token]);
 
   const signup = async (signupData) => {
     try {
-      let token = await LeagueOneApi.registerUser(signupData);
+      const token = await LeagueOneApi.registerUser(signupData);
       setToken(token);
       return { success: true };
     } catch (errors) {
-      console.error('signup failed', errors);
+      console.error('Signup failed', errors);
       return { success: false, errors };
     }
   };
 
-  const login = async (data) => {
+  const login = async (loginData) => {
     try {
-      let token = await LeagueOneApi.loginUser(data);
-      setToken(token); // Ensure this correctly updates the token state
+      const token = await LeagueOneApi.loginUser(loginData);
+      setToken(token);
       return { success: true };
     } catch (errors) {
-      console.error('login failed', errors);
+      console.error('Login failed', errors);
       return { success: false, errors };
     }
   };
-  
 
   const logout = () => {
     setCurrentUser(null);
     setToken(null);
   };
 
+  if (loading) return <div>Loading...</div>;  // Ensure loading screen until data is ready
+
   return (
-    <BrowserRouter>
-      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <BrowserRouter>
         <div className="App">
           <Routing signup={signup} login={login} logout={logout} />
         </div>
-      </UserContext.Provider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 
-export default App
+export default App;

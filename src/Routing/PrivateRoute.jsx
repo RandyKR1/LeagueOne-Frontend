@@ -8,14 +8,17 @@ const PrivateRoute = () => {
   const { currentUser } = useContext(UserContext);
   const [showAlert, setShowAlert] = useTimedMessage(3000);
   const [alertMessages, setAlertMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!currentUser && !showAlert) {
-      console.log("current user:",currentUser)
+    if (currentUser === null) {
       setAlertMessages(['You must log in to view this page.']);
       setShowAlert(true);
     }
-  }, [currentUser, showAlert, setShowAlert]);
+    setLoading(false);
+  }, [currentUser, setShowAlert]);
+
+  if (loading) return <div>Loading...</div>;
 
   if (!currentUser) {
     return (
