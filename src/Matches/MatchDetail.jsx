@@ -35,6 +35,7 @@ const MatchDetail = () => {
                         <br />
                         <p>{match.awayTeam.name}:{match.team2Score}</p>
                 </div>
+                <Link className="button" to={`/leagues/${leagueId}`}>{match.league.name}</Link>
 
                 {(currentUser.isLeagueAdmin && currentUser.id === match.league.adminId) && (
                     <div className="actions">

@@ -30,7 +30,7 @@ const TeamDetail = () => {
             <h2>{team.name}</h2>
             <p>{team.description}</p>
             <p>Max Players: {team.maxPlayers}</p>
-            <p>Admin: {team.admin?.firstName}</p>
+            <h3>Admin:<Link to={`/users/${team.admin.username}`}>{team.admin.firstName} {" "} {team.admin.lastName}</Link></h3>
             <h3>Members:</h3>
             {team.players && team.players.length > 0 ? (
                 <ul className="list">

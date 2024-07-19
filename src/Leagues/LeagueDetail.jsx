@@ -35,10 +35,10 @@ const LeagueDetail = () => {
 
     return (
         <div className="container">
-            <h2>{league.name}</h2>
-            <p>{league.description}</p>
-            <p>Max Teams: {league.maxTeams}</p>
-            <p>League Admin: {league.admin.firstName} {" "} {league.admin.lastName}</p>
+            <h1>{league.name}</h1>
+            <h3>{league.description}</h3>
+            <h3>Max Teams: {league.maxTeams}</h3>
+            <h3>Admin:<Link to={`/users/${league.admin.username}`}>{league.admin.firstName} {" "} {league.admin.lastName}</Link></h3>
 
             <div className="actions">
                     <Link className="button" to={`/leagues/${league.id}/matches`}>View Matches</Link>

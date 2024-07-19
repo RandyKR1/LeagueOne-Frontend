@@ -30,7 +30,7 @@ const LeagueList = () => {
                             </Link>
                             <p>{league.description}</p>
                             <p>Max Teams: {league.maxTeams}</p>
-                            <p>Admin: {league.admin.firstName} {" "} {league.admin.lastName}</p>
+                            <p>Admin: <Link to={`/users/${league.admin.username}`}>{league.admin.firstName} {" "} {league.admin.lastName}</Link></p>
                         </li>
                     ))
                 ) : (

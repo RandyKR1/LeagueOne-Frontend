@@ -87,7 +87,7 @@ const UserDetail = () => {
             )}
           </div>
     
-          {currentUser && (
+          {currentUser.id === user.id && (
             <div className="actions">
               <Link className="button" to={`/users/${currentUser.username}/update`}>Update User</Link>
             </div>
