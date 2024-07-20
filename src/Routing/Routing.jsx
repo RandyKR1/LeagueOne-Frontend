@@ -22,13 +22,14 @@ import PrivateRoute from "./PrivateRoute";
 import Nav from "./Nav";
 import TeamJoin from "../Teams/TeamJoin";
 import LeagueJoin from "../Leagues/LeagueJoin";
+import LeagueStandings from "../Leagues/LeagueStandings";
 
 const Routing = ({ signup, login, logout }) => {
     return (
         <>
         <Nav logout={logout} />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home login={login}/>} />
                 <Route path="/signup" element={<SignUp signup={signup} />} />
                 <Route path="/login" element={<Login login={login} />} />
                 <Route element={<PrivateRoute />}>
@@ -37,6 +38,7 @@ const Routing = ({ signup, login, logout }) => {
                     <Route path="/leagues/create" element={<LeagueForm />} />
                     <Route path="/leagues/:id/update" element={<LegaueUpdateForm />} />
                     <Route path="/leagues/:id/join" element={<LeagueJoin />} />
+                    <Route path="/leagues/:id/standings" element={<LeagueStandings />} />
                     <Route path="/leagues/:leagueId/matches" element={<MatchList />} />
                     <Route path="/leagues/:leagueId/matches/:matchId" element={<MatchDetail />} />
                     <Route path="/leagues/:leagueId/matches/create" element={<MatchForm />} />
@@ -50,8 +52,6 @@ const Routing = ({ signup, login, logout }) => {
                     <Route path="/users/:username" element={<UserDetail />} />
                     <Route path="/users/:username/update" element={<UserUpdateForm />} />
                 </Route>
-
-                
             </Routes>
         </>
     )

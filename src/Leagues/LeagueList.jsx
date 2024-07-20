@@ -19,18 +19,27 @@ const LeagueList = () => {
 
     console.log(leagues)
     return (
+        <>
         <div className="container">
-            <h1>Leagues</h1>
+        <h1>Leagues</h1>
+        <div className="list-container">
             <ul className="list">
                 {leagues.length > 0 ? (
                     leagues.map((league) => (
                         <li key={league.id}>
                             <Link to={`/leagues/${league.id}`}>
-                                <h3>{league.name}</h3>
+                                <div className="list-display-container">
+                                    <div className="list-display">
+                                        <h3>{league.name}</h3>
+                                        <p>{league.description}</p>
+                                    </div>
+                                    <div className="list-display">
+                                    <p>Max Teams: {league.maxTeams}</p>
+                                    <p>Admin: <Link to={`/users/${league.admin.username}`}>{league.admin.firstName} {" "} {league.admin.lastName}</Link></p>
+                                    </div>
+                                </div>
                             </Link>
-                            <p>{league.description}</p>
-                            <p>Max Teams: {league.maxTeams}</p>
-                            <p>Admin: <Link to={`/users/${league.admin.username}`}>{league.admin.firstName} {" "} {league.admin.lastName}</Link></p>
+                            
                         </li>
                     ))
                 ) : (
@@ -38,6 +47,8 @@ const LeagueList = () => {
                 )}
             </ul>
         </div>
+        </div>
+        </>
     );
 };
 

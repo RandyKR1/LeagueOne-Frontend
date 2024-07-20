@@ -22,7 +22,7 @@ const MatchList = () => {
   }, [leagueId]);
 
   return (
-    <div className="container">
+    <div className="list-container">
       <h1>Matches</h1>
       {matches.length > 0 ? (
         <ul className="list">

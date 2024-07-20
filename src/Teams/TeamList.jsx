@@ -19,7 +19,9 @@ const TeamList = () => {
     }, []);
 
     return (
+        <>
         <div className="container">
+        <div className="list-container">
             <h1>Teams</h1>
             <ul className="list">
                 {teams.length > 0 ? (
@@ -37,6 +39,8 @@ const TeamList = () => {
                 )}
             </ul>
         </div>
+        </div>
+        </>
     );
 };
 

@@ -57,8 +57,8 @@ class LeagueOneApi {
     return res;
   }
 
-  static async getStandingsByLeagueId(leagueId){
-    let res = await this.request(`leagues/${leagueId}/standings`)
+  static async getStandingsByLeagueId(id){
+    let res = await this.request(`leagues/${id}/standings`)
     return res;
   }
   
