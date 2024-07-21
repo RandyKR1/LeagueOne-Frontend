@@ -21,17 +21,24 @@ const TeamList = () => {
     return (
         <>
         <div className="container">
+        <h1>Teams</h1>
         <div className="list-container">
-            <h1>Teams</h1>
             <ul className="list">
                 {teams.length > 0 ? (
-                    teams.map((team) => (
-                        <li key={team.id}>
-                            <Link to={`/teams/${team.id}`}>
-                                <h3 className="button">{team.name}</h3>
+                    teams.map((teams) => (
+                        <li key={teams.id}>
+                            <Link to={`/teams/${teams.id}`}>
+                                <div className="list-display-container">
+                                    <div className="list-display">
+                                        <h3>{teams.name}</h3>
+                                    </div>
+                                    <div className="list-display">
+                                    <p>Max Players: {teams.maxPlayers}</p>
+                                    <p>Admin: <Link to={`/users/${teams.admin.username}`}>{teams.admin.firstName} {" "} {teams.admin.lastName}</Link></p>
+                                    </div>
+                                </div>
                             </Link>
-                            <p>{team.description}</p>
-                            <p>Max Players: {team.maxPlayers}</p>
+                            
                         </li>
                     ))
                 ) : (

@@ -5,6 +5,7 @@
   width: 100vw;
   transform: translate(-8px, -8px);
   overflow: hidden;
+  font-family: "Kanit", sans-serif;
 }
 
 .App {
@@ -65,7 +66,11 @@ a{
   justify-content: center;
   border-radius: 6px;
   background-color: #d2d2d2;
-  color: black;
+  color: #00004e
+}
+
+.list-display-container h3 {
+  font-size: 25px;
 }
 
 .list-display{
@@ -78,8 +83,9 @@ a{
 }
 
 .container p {
-  font-size: 16px;
+  font-size: 20px;
 }
+
 
 .container .details {
   margin-bottom: 20px;
