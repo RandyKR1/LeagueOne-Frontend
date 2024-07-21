@@ -22,9 +22,9 @@ const Home = ({login}) => {
     
     const loggedInHome = () => {
         return (
-          <div className="container">
+          <div className="home-container">
             <h1 className="home-h1">
-              Welcome Back {currentUser.firstName}
+              Hi {currentUser.firstName}!
             </h1>
             <div className="home-display-container">
 
@@ -32,9 +32,11 @@ const Home = ({login}) => {
                     <h1>Your Teams</h1>
                     {currentUser.administeredTeams && currentUser.administeredTeams.length > 0 ? (
                         currentUser.administeredTeams.map((team) => (
-                            <div key={team.id} className="home-team">
-                                <h3>{team.name}</h3>
-                            </div>
+                            <Link to={`/teams/${team.id}`}>
+                                <div key={team.id} className="home-team">
+                                    <h3>{team.name}</h3>
+                                </div>
+                            </Link>
                         ))
                     ) : (
                         <p>No teams to display</p>
@@ -45,9 +47,11 @@ const Home = ({login}) => {
                     <h1>Your leagues</h1>
                     {currentUser.administeredLeagues && currentUser.administeredLeagues.length > 0 ? (
                         currentUser.administeredLeagues.map((league) => (
-                            <div key={league.id} className="home-league">
-                                <h3>{league.name}</h3>
-                            </div>
+                            <Link to={`/leagues/${league.id}`}>
+                                <div key={league.id} className="home-league">
+                                    <h3>{league.name}</h3>
+                                </div>
+                            </Link>
                         ))
                     ) : (
                         <p>No leagues to display</p>
@@ -58,9 +62,11 @@ const Home = ({login}) => {
                     <h1>Joined Teams</h1>
                     {currentUser.teams && currentUser.teams.length > 0 ? (
                         currentUser.teams.map((team) => (
-                            <div key={team.id} className="home-team">
-                                <h3>{team.name}</h3>
-                            </div>
+                            <Link to={`/teams/${team.id}`}>
+                                <div key={team.id} className="home-team">
+                                    <h3>{team.name}</h3>
+                                </div>
+                            </Link>
                         ))
                     ) : (
                         <p>No teams to display</p>
@@ -71,15 +77,16 @@ const Home = ({login}) => {
                     <h1>Joined Leagues</h1>
                     {currentUser.leagues && currentUser.leagues.length > 0 ? (
                         currentUser.leagues.map((league) => (
-                            <div key={league.id} className="home-league">
-                                <h3>{league.name}</h3>
-                            </div>
+                            <Link to={`/leagues/${league.id}`}>
+                                <div key={league.id} className="home-league">
+                                    <h3>{league.name}</h3>
+                                </div>
+                            </Link>
                         ))
                     ) : (
                         <p>No leagues to display</p>
                     )}
                 </div>
-
             </div>
           </div>
         );

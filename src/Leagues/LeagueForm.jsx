@@ -49,7 +49,8 @@ const LeagueForm = () => {
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmit}>
+            <h2>League Creation</h2>
+            <form className="form-container" onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
                 <input
                     type="text"
@@ -100,12 +101,13 @@ const LeagueForm = () => {
                 </select>
 
                 <label htmlFor="description">Description:</label>
-                <textarea
+                <input
+                    type="text"
                     id="description"
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                />
+                    />
 
                 <label htmlFor="firstPlacePoints">First Place Points:</label>
                 <input
@@ -136,7 +138,7 @@ const LeagueForm = () => {
 
                 {error && <p>{error}</p>}
 
-                <button type="submit">Create League</button>
+                <button className="button" type="submit">Create League</button>
             </form>
         </div>
     );

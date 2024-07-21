@@ -77,7 +77,8 @@ const MatchForm = () => {
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit}>
+      <h2>Match Creation</h2>
+      <form className="form-container" onSubmit={handleSubmit}>
         <label htmlFor="eventType">Event Type:</label>
         <select
           id="eventType"
@@ -157,7 +158,7 @@ const MatchForm = () => {
 
         {error && <p>{error}</p>}
 
-        <button type="submit">Create Match</button>
+        <button className="button" type="submit">Create Match</button>
       </form>
     </div>
   );

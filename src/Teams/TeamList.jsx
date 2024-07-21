@@ -21,7 +21,14 @@ const TeamList = () => {
     return (
         <>
         <div className="container">
-        <h1>Teams</h1>
+        <div className="header-list">
+                <div className="header-list-display">
+                    <p>Teams</p> 
+                </div>
+                <div className="header-list-display">
+                    <Link to={"/teams/create"}>Create Team</Link>
+                </div>
+            </div>
         <div className="list-container">
             <ul className="list">
                 {teams.length > 0 ? (

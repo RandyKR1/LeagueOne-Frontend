@@ -52,7 +52,9 @@ const TeamJoin = () => {
   return (
     <div className='container'>
       <h2>Join Team</h2>
-      <form onSubmit={handleSubmit}>
+      <form 
+        className="form-container"
+        onSubmit={handleSubmit}>
         <div>
           <label>Password:</label>
           <input
@@ -63,12 +65,11 @@ const TeamJoin = () => {
             required
           />
         </div>
-        <button type="submit">Join Team</button>
+        <button className="button" type="submit">Join Team</button>
       </form>
       {message && <p style={{ color: 'green' }}>{message}</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <div>
-        
       </div>
     </div>
   );

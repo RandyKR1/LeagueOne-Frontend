@@ -2,9 +2,7 @@ import React, {useContext} from "react";
 import {Link } from "react-router-dom"
 import Home from "../Home/Home";
 import UserContext from "../Auth/UserContext";
-import Login from "../Auth/Login";
 import SignUp from "../Auth/SignUp";
-import "./Nav.css"
 import LeagueList from "../Leagues/LeagueList";
 import TeamList from "../Teams/TeamList";
 import LeagueForm from "../Leagues/LeagueForm";
@@ -20,17 +18,13 @@ const Nav = ({logout}) => {
     const loggedInNav = () => {
         return(
             <>
-            <ul className="nav"> 
-                <Link className="nav" to="/" element={<Home />}>LeagueOne</Link>
-                <Link className="nav" to="/leagues" element={<LeagueList />}>Leagues</Link>
-                <Link className="nav" to="/leagues/create" element={<LeagueForm />}>Create a League</Link>
-                <Link className="nav" to="/teams" element={<TeamList />}>Teams</Link>
-                <Link className="nav" to="/teams/create" element={<TeamForm />}>Create a Team</Link>
-                <Link className="nav" to={`/users/${currentUser.username}`} element={<UserDetail />}>{currentUser.username}</Link>
+            <ul> 
+                <Link to="/" element={<Home />}>LeagueOne</Link>
+                <Link to="/leagues" element={<LeagueList />}>Leagues</Link>
+                <Link to="/teams" element={<TeamList />}>Teams</Link>
+                <Link to={`/users/${currentUser.username}`} element={<UserDetail />}>{currentUser.username}</Link>
+                <Link to="/" onClick={logout}>Log Out</Link>
             </ul>
-                <div className="nav-logout">
-                    <Link className="nav" to="/" onClick={logout}>Log Out</Link>
-                </div>
             </>
         )
     }
@@ -38,10 +32,9 @@ const Nav = ({logout}) => {
     const loggedOutNav =() => {
         return(
             <>
-             <ul className="nav">
-             <Link className="nav" to="/" element={<Home />}>LeagueOne</Link>
-             <Link className="nav" to="/login" element={<Login />}>Login</Link>
-             <Link className="nav" to="/signup" element={<SignUp />}>Sign Up</Link>
+             <ul>
+             <Link to="/" element={<Home />}>LeagueOne</Link>
+             <Link to="/signup" element={<SignUp />}>Sign Up</Link>
             </ul>
             </>
         )
@@ -49,7 +42,7 @@ const Nav = ({logout}) => {
 
 
     return(
-        <nav>
+        <nav className="nav">
             {currentUser ? loggedInNav() : loggedOutNav()}
         </nav>
     )

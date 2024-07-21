@@ -69,7 +69,9 @@ const UserUpdateForm = () => {
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmit}>
+            <form 
+                className="form-container"
+                onSubmit={handleSubmit}>
                 <label htmlFor="firstName">First Name:</label>
                 <input
                     type="text"
@@ -110,7 +112,7 @@ const UserUpdateForm = () => {
                     onChange={handleChange}
                 />
                 {error && <p>{error}</p>}
-                <button type="submit">Update User</button>
+                <button className="button" type="submit">Update User</button>
             </form>
         </div>
     );

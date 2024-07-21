@@ -22,8 +22,19 @@ const MatchList = () => {
   }, [leagueId]);
 
   return (
-    <div className="list-container">
-      <h1>Matches</h1>
+    <div className="container">
+       <div className="header-list">
+          <div className="header-list-display">
+            <p>Matches</p> 
+          </div>
+          <div className="header-list-display">
+            {currentUser?.isLeagueAdmin && (
+              <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
+            )}
+          </div>
+            </div>
+      <div className="list-container">
+        <ul className="list">
       {matches.length > 0 ? (
         <ul className="list">
           {matches.map((match) => (
@@ -39,11 +50,8 @@ const MatchList = () => {
       ) : (
         <p>No matches yet!</p>
       )}
-      {currentUser?.isLeagueAdmin && (
-        <button>
-          <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
-        </button>
-      )}
+      </ul>
+    </div>
     </div>
   );
 };

@@ -29,7 +29,7 @@ const SignUp = () => {
             const res = await LeagueOneApi.registerUser(formData);
             console.log(res)
             if (res.id && res.username && res.password && res.email) {
-                navigate("/login"); // Redirect to login page after successful signup
+                navigate("/"); // Redirect to login page after successful signup
             } else {
                 setError("Failed to register user");
             }
@@ -40,7 +40,8 @@ const SignUp = () => {
 
     return (
         <div className="container">
-        <form onSubmit={handleSubmit}>
+            <h2>Sign Up</h2>
+        <form className="form-container" onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name:</label>
             <input
                 type="text"
@@ -87,7 +88,7 @@ const SignUp = () => {
                 required
             />
             {error && <p>{error}</p>}
-            <button type="submit">Sign Up</button>
+            <button className="button" type="submit">Sign Up</button>
         </form>
         </div>
     );

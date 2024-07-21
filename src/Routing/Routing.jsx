@@ -17,7 +17,6 @@ import UserList from "../Users/UserList";
 import UserDetail from "../Users/UserDetail";
 import UserUpdateForm from "../Users/UserUpdateForm";
 import SignUp from "../Auth/SignUp";
-import Login from "../Auth/Login";
 import PrivateRoute from "./PrivateRoute";
 import Nav from "./Nav";
 import TeamJoin from "../Teams/TeamJoin";
@@ -31,7 +30,6 @@ const Routing = ({ signup, login, logout }) => {
             <Routes>
                 <Route path="/" element={<Home login={login}/>} />
                 <Route path="/signup" element={<SignUp signup={signup} />} />
-                <Route path="/login" element={<Login login={login} />} />
                 <Route element={<PrivateRoute />}>
                     <Route path="/leagues" element={<LeagueList />} />
                     <Route path="/leagues/:id" element={<LeagueDetail />} />

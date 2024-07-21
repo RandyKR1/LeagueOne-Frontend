@@ -35,7 +35,7 @@ const LeagueStandings = () => {
   }
 
   return (
-    <div className="container">
+    <div >
       <h2>Standings</h2>
       <table>
         <thead>

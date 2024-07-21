@@ -43,25 +43,12 @@ const LeagueDetail = () => {
     console.log(league)
 
     return (
-        <div className="container">
+        <div className="league-container">
+            <div className="league-display-container">
             <h1>{league.name}</h1>
-            <h3>{league.description}</h3>
+            <h2>{league.description}</h2>
+            <h2>Admin: <Link to={`/users/${league.admin.username}`}>{league.admin.firstName} {" "} {league.admin.lastName}</Link></h2>
             <h3>Max Teams: {league.maxTeams}</h3>
-            <h3>Admin:<Link to={`/users/${league.admin.username}`}>{league.admin.firstName} {" "} {league.admin.lastName}</Link></h3>
-
-            <div className="actions">
-                    <Link className="button" to={`/leagues/${league.id}/matches`}>View Matches</Link>
-                {currentUser.isTeamAdmin && (
-                    <Link className="button" to={`/leagues/${league.id}/join`}>Join League</Link>
-                )} 
-                {(currentUser.isLeagueAdmin && currentUser.id === league.admin.id) && (
-                    <>
-                    <Link className="button" to={`/leagues/${league.id}/update`}>Update League</Link>
-                    <button className="button" onClick={handleDelete}>Delete League</button>
-                    </>
-                )}
-            </div>
-
             <div className="teams-list">
                 <h3>Teams in {league.name}:</h3>
                 {league.teams && league.teams.length > 0 ? (
@@ -75,8 +62,23 @@ const LeagueDetail = () => {
                 )}
             </div>
 
-            {/* Integrate the LeagueStandings component */}
-            <LeagueStandings leagueId={id} />
+            <div className="league-buttons">
+                    <Link className="button" to={`/leagues/${league.id}/matches`}>View Matches</Link>
+                {currentUser.isTeamAdmin && (
+                    <Link className="button" to={`/leagues/${league.id}/join`}>Join League</Link>
+                )} 
+                {(currentUser.isLeagueAdmin && currentUser.id === league.admin.id) && (
+                    <>
+                    <Link className="button" to={`/leagues/${league.id}/update`}>Update League</Link>
+                    <button className="button-delete" onClick={handleDelete}>Delete League</button>
+                    </>
+                )}
+            </div>
+            </div>
+
+            <div className="league-display-container">
+                <LeagueStandings leagueId={id} />
+            </div>
         </div>
     );
 };

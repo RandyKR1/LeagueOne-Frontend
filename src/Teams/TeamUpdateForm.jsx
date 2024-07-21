@@ -68,7 +68,9 @@ const TeamUpdateForm = () => {
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmit}>
+            <form 
+                className="form-container"
+                onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
                 <input
                     type="text"
@@ -94,7 +96,7 @@ const TeamUpdateForm = () => {
                     onChange={handleChange}
                 />
                 {error && <p>{error}</p>}
-                <button type="submit">Update Team</button>
+                <button className="button" type="submit">Update Team</button>
             </form>
         </div>
     );

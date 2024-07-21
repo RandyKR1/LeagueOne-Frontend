@@ -72,7 +72,9 @@ const LeagueJoinForm = () => {
   return (
     <div className="container">
       <h2>Join League</h2>
-      <form onSubmit={handleSubmit}>
+      <form 
+        className="form-container"
+        onSubmit={handleSubmit}>
         <label htmlFor="teamId">Select Your Team:</label>
         <select
           id="teamId"
@@ -96,7 +98,7 @@ const LeagueJoinForm = () => {
           required
         />
         {error && <p className="error">{error}</p>}
-        <button type="submit">Join League</button>
+        <button className="button" type="submit">Join League</button>
       </form>
     </div>
   );

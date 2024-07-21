@@ -37,25 +37,33 @@ const MatchDetail = () => {
 
     return (
         <div className="container">
-            <h1>Match Detail</h1>
-            <p>Event Location: {match.eventLocation}</p>
-            <div>
-                <h2>Event Results</h2>
-                <p>{match.homeTeam.name}: {match.team1Score}</p>
-                <br />
-                <p>{match.awayTeam.name}: {match.team2Score}</p>
+            <div className="header-match">
+                <div className="header-match-display">
+                    <p>Match Detail</p> 
+                </div>
+            <div className="header-match-display">
+                <Link to={`/leagues/${leagueId}`}>Back to League Details</Link>
             </div>
-            <Link className="button" to={`/leagues/${leagueId}`}>{match.league.name}</Link>
+        </div>
+            <div className="container-match">
+                <p>Location: {match.eventLocation}</p>
+            </div>
+            <div className="result-container">
+                <h2>Event Results</h2>
+                <div className="result-container-display">
+                <p>{match.homeTeam.name}: {match.team1Score}</p>
+                </div>
+                <div className="result-container-display">
+                <p>{match.awayTeam.name}: {match.team2Score}</p>
+                </div>
+            </div>
+        
 
             {(currentUser.isLeagueAdmin && currentUser.id === match.league.adminId) && (
-                <div className="actions">
-                    <button className="button">
-                        <Link to={`/leagues/${leagueId}/matches/${matchId}/update`}>Update</Link>
-                    </button>
-                    <button className="button">
-                        <Link to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
-                    </button>
-                    <button className="button" onClick={handleDelete}>Delete Match</button>
+                <div className="actions-match-detail">
+                    <Link className="button" to={`/leagues/${leagueId}/matches/${matchId}/update`}>Update</Link>
+                    <Link className="button" to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
+                    <button className="button-delete" onClick={handleDelete}>Delete Match</button>
                 </div>
             )}
         </div>

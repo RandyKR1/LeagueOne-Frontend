@@ -37,11 +37,10 @@ const TeamDetail = () => {
 
     return (
         <div className="container">
-            <h2>{team.name}</h2>
-            <p>{team.description}</p>
+            <h1>{team.name}</h1>
             <p>Max Players: {team.maxPlayers}</p>
-            <h3>Admin:<Link to={`/users/${team.admin.username}`}>{team.admin.firstName} {" "} {team.admin.lastName}</Link></h3>
-            <h3>Members:</h3>
+            <h2>Admin: <Link to={`/users/${team.admin.username}`}>{team.admin.firstName} {" "} {team.admin.lastName}</Link></h2>
+            <h2>Members:</h2>
             {team.players && team.players.length > 0 ? (
                 <ul className="list">
                     {team.players.map(member => (
@@ -52,7 +51,7 @@ const TeamDetail = () => {
                 <p>No members in this team.</p>
             )}
 
-            <h3>Leagues Joined:</h3>
+            <h2>Leagues Joined:</h2>
             {team.leagues && team.leagues.length > 0 ? (
                 <ul className="list">
                     {team.leagues.map(league => (
@@ -67,7 +66,7 @@ const TeamDetail = () => {
                 {(currentUser.isTeamAdmin && currentUser.id === team.admin.id) && (
                     <>
                     <Link className="button" to={`/teams/${teamId}/update`}>Update Team</Link>
-                    <button className="button" onClick={handleDelete}>Delete Team</button>
+                    <button className="button-delete" onClick={handleDelete}>Delete Team</button>
                     </>
                 )}
             </div>
