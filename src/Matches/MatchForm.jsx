@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LeagueOneApi from "../api";
+import Alert from "../Common/Alert";
 
 const MatchForm = () => {
   const INITIAL_STATE = {
     eventLocation: "",
     eventType: "",
-    participant1: "",
-    participant2: "",
-    participant1Score: "",
-    participant2Score: ""
+    team1: "",
+    team2: "",
+    team1Score: "",
+    team2Score: ""
   };
 
   const { leagueId } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState([]);
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {
@@ -27,14 +28,12 @@ const MatchForm = () => {
         }
       } catch (error) {
         console.error("Error fetching teams:", error);
-        setError("Failed to fetch teams");
+        setErrors(["Failed to fetch teams"]);
       }
     };
 
     fetchTeams();
   }, [leagueId]);
-
-  console.log("Teams:", teams)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,6 +48,12 @@ const MatchForm = () => {
 
     const { team1, team2, team1Score, team2Score, eventLocation, eventType } = formData;
 
+    // Validate scores
+    if (team1 === team2) {
+      setErrors(["Teams cannot be the same"]);
+      return;
+    }
+
     const matchData = {
       leagueId: parseInt(leagueId, 10),
       eventLocation,
@@ -61,17 +66,13 @@ const MatchForm = () => {
 
     try {
       let res = await LeagueOneApi.createMatch(leagueId, matchData);
-      console.log(res)
       if (res.match && res.match.id) {
         navigate(`/leagues/${leagueId}/matches/${res.match.id}`);
       } else {
-        setError("Failed to create match");
+        setErrors(["Failed to create match"]);
       }
     } catch (err) {
-      console.error("Error creating match:", err);
-      setError(
-        err.response?.data?.error || err.message || "Something went wrong"
-      );
+      setErrors([err.response?.data?.error || "Something went wrong"]);
     }
   };
 
@@ -156,7 +157,7 @@ const MatchForm = () => {
           required
         />
 
-        {error && <p>{error}</p>}
+        {errors.length > 0 && <Alert messages={errors} />}
 
         <button className="button" type="submit">Create Match</button>
       </form>

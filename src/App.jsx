@@ -7,13 +7,15 @@ import useLocalStorage from './Hooks/LocalStorage';
 import {jwtDecode} from 'jwt-decode';
 import UserContext from './Auth/UserContext';
 import LeagueOneApi from './api';
+import Alert from './Common/Alert';
 
 const TOKEN_STORAGE_ID = "leagueone-token";
 
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);  // Change to manage loading state
+  const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -25,6 +27,7 @@ function App() {
           setCurrentUser(user);
         } catch (error) {
           console.error("Error fetching current user", error);
+          setErrors(["Failed to fetch user data."]);
           setCurrentUser(null);
         }
       } else {
@@ -41,34 +44,36 @@ function App() {
       const token = await LeagueOneApi.registerUser(signupData);
       setToken(token);
       return { success: true };
-    } catch (errors) {
+    } catch (e) {
       console.error('Signup failed', errors);
-      return { success: false, errors };
+      return { success: false, errors: e.response?.data.errors || ["Sign Up failed. Please try again."] };
     }
   };
 
   const login = async (loginData) => {
     try {
-      const token = await LeagueOneApi.loginUser(loginData);
-      setToken(token);
-      return { success: true };
-    } catch (errors) {
-      console.error('Login failed', errors);
-      return { success: false, errors };
+        const token = await LeagueOneApi.loginUser(loginData);
+        setToken(token);
+        return { success: true };
+    } catch (e) {
+        console.error('Login failed', errors);
+        return { success: false, errors: e.response?.data.errors || ["Login failed. Please try again."] };
     }
-  };
+};
+
 
   const logout = () => {
     setCurrentUser(null);
     setToken(null);
   };
 
-  if (loading) return <div>Loading...</div>;  // Ensure loading screen until data is ready
+  if (loading) return <div>Loading...</div>;
 
   return (
     <UserContext.Provider value={{ currentUser, setCurrentUser }}>
       <BrowserRouter>
         <div className="App">
+          {errors.length > 0 && <Alert messages={errors} />}
           <Routing signup={signup} login={login} logout={logout} />
         </div>
       </BrowserRouter>

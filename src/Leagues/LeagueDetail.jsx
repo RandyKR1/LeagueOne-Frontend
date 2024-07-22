@@ -75,10 +75,12 @@ const LeagueDetail = () => {
                 )}
             </div>
             </div>
-
-            <div className="league-display-container">
-                <LeagueStandings leagueId={id} />
-            </div>
+                <div className="league-display-container">
+                    <Link to={`/leagues/${league.id}/standings`}>
+                        <LeagueStandings leagueId={id} />
+                    </Link>
+                </div>
+            
         </div>
     );
 };

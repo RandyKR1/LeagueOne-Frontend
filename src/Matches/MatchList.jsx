@@ -34,15 +34,15 @@ const MatchList = () => {
           </div>
             </div>
       <div className="list-container">
-        <ul className="list">
       {matches.length > 0 ? (
         <ul className="list">
           {matches.map((match) => (
-            <li key={match.id}>
+            <li 
+              className="match-list-display"
+              key={match.id}>
               <Link to={`/leagues/${leagueId}/matches/${match.id}`}>
-                <p>{match.homeTeam.name} vs {match.awayTeam.name}</p>
                 <p>{match.eventLocation}</p>
-                <p>Event Results: {match.homeTeam.name}: {match.team1Score} vs {match.awayTeam.name}: {match.team2Score}</p>
+                <p>{match.homeTeam.name}: {match.team1Score} vs {match.awayTeam.name}: {match.team2Score}</p>
               </Link>
             </li>
           ))}
@@ -50,7 +50,6 @@ const MatchList = () => {
       ) : (
         <p>No matches yet!</p>
       )}
-      </ul>
     </div>
     </div>
   );

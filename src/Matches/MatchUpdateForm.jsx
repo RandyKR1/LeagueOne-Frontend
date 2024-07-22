@@ -89,7 +89,9 @@ const MatchUpdateForm = () => {
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmit}>
+            <form 
+                className="form-container"
+                onSubmit={handleSubmit}>
                 <label htmlFor="eventType">Event Type:</label>
                 <select
                     id="eventType"
@@ -169,7 +171,7 @@ const MatchUpdateForm = () => {
 
                 {error && <p>{error}</p>}
 
-                <button type="submit">Update Match</button>
+                <button className="button" type="submit">Update Match</button>
             </form>
         </div>
     );

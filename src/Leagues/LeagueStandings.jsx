@@ -1,30 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 import LeagueOneApi from '../api';
 
 const LeagueStandings = () => {
-    const { id } = useParams();
-    const [standings, setStandings] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+  const { id } = useParams();
+  const [standings, setStandings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchStandings = async () => {
       try {
         const standingsData = await LeagueOneApi.getStandingsByLeagueId(id);
         standingsData.sort((a, b) => b.points - a.points);
-        setStandings(standingsData);
-        setLoading(false);
+        if (isMounted) {
+          setStandings(standingsData);
+          setLoading(false);
+        }
       } catch (error) {
         console.error('Error fetching standings:', error);
-        setError('Failed to fetch standings');
-        setLoading(false);
+        if (isMounted) {
+          setError('Failed to fetch standings');
+          setLoading(false);
+        }
       }
     };
 
     fetchStandings();
-  }, [id]);
 
+    return () => {
+      isMounted = false;
+    };
+  }, [id]);
 
   if (loading) {
     return <div>Loading standings...</div>;
@@ -35,7 +44,7 @@ const LeagueStandings = () => {
   }
 
   return (
-    <div >
+    <div className='standings'>
       <h2>Standings</h2>
       <table>
         <thead>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LeagueOneApi from "../api";
+import Alert from "../Common/Alert";
 
 const LeagueForm = () => {
     const INITIAL_STATE = {
@@ -8,21 +9,20 @@ const LeagueForm = () => {
         description: "",
         maxTeams: "",
         password: "",
-        competition: "", // Added competition field
-        firstPlacePoints: "", // Added points fields
+        competition: "",
+        firstPlacePoints: "",
         secondPlacePoints: "",
         drawPoints: ""
     };
 
     const [formData, setFormData] = useState(INITIAL_STATE);
-    const [error, setError] = useState(null); // Changed error state to null initially
+    const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         let updatedValue = value;
 
-        // Convert specific fields to integers, allowing 0 as a valid value
         if (["maxTeams", "firstPlacePoints", "secondPlacePoints", "drawPoints"].includes(name)) {
             updatedValue = value === "" ? "" : parseInt(value, 10);
         }
@@ -35,15 +35,24 @@ const LeagueForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        const validationErrors = [];
+        if (formData.password.length < 8) validationErrors.push("Password must be at least 8 characters long.");
+        
+        if (validationErrors.length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
         try {
             let res = await LeagueOneApi.createLeague(formData);
             if (res && res.id) {
                 navigate(`/leagues`);
             } else {
-                setError("Failed to create league");
+                setErrors(["Failed to create league"]);
             }
         } catch (err) {
-            setError(err.message || "Something went wrong");
+            setErrors([err.message || "Something went wrong"]);
         }
     };
 
@@ -107,7 +116,7 @@ const LeagueForm = () => {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    />
+                />
 
                 <label htmlFor="firstPlacePoints">First Place Points:</label>
                 <input
@@ -136,7 +145,7 @@ const LeagueForm = () => {
                     onChange={handleChange}
                 />
 
-                {error && <p>{error}</p>}
+                {errors.length > 0 && <Alert messages={errors} />}
 
                 <button className="button" type="submit">Create League</button>
             </form>

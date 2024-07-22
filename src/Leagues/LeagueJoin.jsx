@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import LeagueOneApi from "../api";
 import UserContext from "../Auth/UserContext";
+import Alert from "../Common/Alert";
 
 const LeagueJoinForm = () => {
   const { id } = useParams();
@@ -16,7 +17,8 @@ const LeagueJoinForm = () => {
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [teams, setTeams] = useState([]);
   const [league, setLeague] = useState(null);
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState([]);
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     const fetchLeague = async () => {
@@ -24,7 +26,7 @@ const LeagueJoinForm = () => {
         const league = await LeagueOneApi.getLeagueById(id);
         setLeague(league);
       } catch (err) {
-        setError(err.message || "Failed to fetch league.");
+        setErrors([err.message || "Failed to fetch league."]);
       }
     };
 
@@ -39,7 +41,7 @@ const LeagueJoinForm = () => {
           setTeams(res || []); // Adjust based on actual response structure
         }
       } catch (err) {
-        setError(err.message || "Failed to fetch teams.");
+        setErrors([err.message || "Failed to fetch teams."]);
       }
     };
 
@@ -56,25 +58,27 @@ const LeagueJoinForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors([]);
+    setSuccess("");
     console.log(`Form Data:`, formData); // Log form data before sending request
+
     try {
       const res = await LeagueOneApi.joinLeague(id, formData);
       if (res && res.message) {
+        setSuccess("Successfully joined the league!");
         navigate(`/leagues/${id}`);
       } else {
-        setError("Failed to join league. Check your password.");
+        setErrors(["Failed to join league. Check your password."]);
       }
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      setErrors([err.message || "Something went wrong"]);
     }
   };
 
   return (
     <div className="container">
       <h2>Join League</h2>
-      <form 
-        className="form-container"
-        onSubmit={handleSubmit}>
+      <form className="form-container" onSubmit={handleSubmit}>
         <label htmlFor="teamId">Select Your Team:</label>
         <select
           id="teamId"
@@ -97,7 +101,8 @@ const LeagueJoinForm = () => {
           onChange={handleChange}
           required
         />
-        {error && <p className="error">{error}</p>}
+        {errors.length > 0 && <Alert messages={errors} />}
+        {success && <Alert messages={[success]} type="success" />}
         <button className="button" type="submit">Join League</button>
       </form>
     </div>
