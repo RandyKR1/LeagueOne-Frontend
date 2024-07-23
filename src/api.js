@@ -87,6 +87,18 @@ class LeagueOneApi {
     return res;
   }
 
+  static async leaveLeague(id, data) {
+    let res = await this.request(`leagues/${id}/leave`, data, 'post');
+    return res;
+  }
+
+  static async removeTeamFromLeague(leagueId, teamLeaguesId) {
+    let res = await this.request(`leagues/${leagueId}/remove/${teamLeaguesId}`, {}, 'delete');
+    return res;
+}
+
+
+
   // Match Routes
   static async getMatches(leagueId, filters = {}) {
     let res = await this.request(`leagues/${leagueId}/matches`, { params: filters });
@@ -143,6 +155,15 @@ class LeagueOneApi {
   static async joinTeam(teamId, data) {
     let res = await this.request(`teams/${teamId}/join`, data, 'post');
     return res;
+  }
+
+  static async leaveTeam(teamId) {
+    let res = await this.request(`teams/${teamId}/leave`, {} , "post");
+    return res.data; 
+  }
+
+  static async removePlayerFromTeam(teamId, playerId) {
+    let res = await this.request(`teams/${teamId}/players/${playerId}`, {}, 'delete')
   }
 
   static async updateTeam(id, data) {

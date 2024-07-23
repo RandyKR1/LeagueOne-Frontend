@@ -19,6 +19,11 @@
   background: #00004e;
 }
 
+button a{
+  color: white;
+  text-decoration: none;
+}
+
 body{
   overflow: hidden;
 }
@@ -35,7 +40,6 @@ a{
 .button{
   font-family: "Kanit", sans-serif;
   margin: 15px 2px 0px 2px;
-  padding: 10px;
   border-radius: 8px;
   background: #00004e;
   border: none;
@@ -51,7 +55,6 @@ a{
 .button-delete{
   font-family: "Kanit", sans-serif;
   margin-top: 15%;
-  padding: 5%;
   border-radius: 8px;
   background: rgb(245, 26, 26);
   border: none;
@@ -63,6 +66,41 @@ a{
 .button-delete:hover{
   box-shadow: 0px 0px 15px -4px red;
 }
+
+.button-remove{
+  font-family: "Kanit", sans-serif;
+  margin-left: 15px;
+  background: red;
+  border: none;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: .75em;
+}
+
+.button-remove:hover{
+  box-shadow: 0px 0px 15px -4px red;
+  cursor: pointer;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 45px;
+  justify-items: center;
+}
+
+/* Optional: If you want to align the buttons inside the grid items */
+.actions .button, .actions .button-delete {
+  width: 125%;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-size: medium;
+  padding: 2px;
+}
+
 
 .container {
   width: 90vw;
@@ -87,6 +125,11 @@ h2{
   color: #00004e;
 }
 
+h4{
+  font-size: 30px;
+  margin: 0;
+}
+
 .container h2 {
   margin-bottom: 10px;
   font-size: 24px;
@@ -102,6 +145,7 @@ h2{
 
 .container p {
   font-size: 20px;
+  margin: 5px;
   color: #00004e;
 }
 
@@ -166,6 +210,8 @@ h2{
 
 .list-display-container h3 {
   font-size: 25px;
+  margin-top: 12px;
+  margin-bottom: 0px;
 }
 
 .list-display{
@@ -234,6 +280,8 @@ h2{
   padding: 20px;
   background-color: #f1f1f1;
   border-radius: 20px;
+  overflow: scroll;
+  scrollbar-width: none;
 }
 
 .home-auth-wrapper a{
@@ -247,9 +295,10 @@ h2{
 
 .home-h1{
   color: #f2f2f2;
-  font-size: 3em;
+  font-size: 3.5em;
   margin-bottom: 0;
   margin-top: 0;
+  transform: translateY(-30px);
 }
 
 
@@ -308,6 +357,9 @@ h2{
   border-radius: 5px;
   padding: 25px;
 }
+
+/* TEAM STYLING */
+
 
 
 /* MATCH STYLING */

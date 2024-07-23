@@ -60,7 +60,7 @@ const MatchDetail = () => {
         
 
             {(currentUser.isLeagueAdmin && currentUser.id === match.league.adminId) && (
-                <div className="actions-match-detail">
+                <div className="actions">
                     <Link className="button" to={`/leagues/${leagueId}/matches/${matchId}/update`}>Update</Link>
                     <Link className="button" to={`/leagues/${leagueId}/matches/create`}>Create A Match</Link>
                     <button className="button-delete" onClick={handleDelete}>Delete Match</button>

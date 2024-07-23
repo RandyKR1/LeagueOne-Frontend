@@ -24,7 +24,7 @@ const PrivateRoute = () => {
     return (
       <>
         {showAlert && <Alert messages={alertMessages} />}
-        <Navigate to="/login" replace />
+        <Navigate to="/" replace />
       </>
     );
   }
