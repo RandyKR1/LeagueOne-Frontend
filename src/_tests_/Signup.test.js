@@ -14,5 +14,4 @@ test('renders SignUp component without crashing', () => {
       <SignUp />
     </MemoryRouter>
   );
-
 });

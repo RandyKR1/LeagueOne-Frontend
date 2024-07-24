@@ -1,17 +1,16 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import LeagueJoin from '../Leagues/LeagueJoin';
+import TeamList from '../Teams/TeamList';
 
 jest.mock('../api', () => ({
-    joinLeague: jest.fn(() => Promise.resolve({}))
+    getTeams: jest.fn(() => Promise.resolve([]))
 }));
 
-test('LeagueJoin renders without crashing', () => {
+test('TeamList renders without crashing', () => {
   render(
     <MemoryRouter>
-      <LeagueJoin />
+      <TeamList />
     </MemoryRouter>
   );
 });
-

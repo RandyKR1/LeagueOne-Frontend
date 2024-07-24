@@ -1,18 +1,17 @@
-// src/_tests_/LeagueList.test.js
-
 import React from 'react';
 import { render } from '@testing-library/react';
-import LeagueList from '../Leagues/LeagueList';
 import { MemoryRouter } from 'react-router-dom';
+import LeagueList from '../Leagues/LeagueList';
 
 jest.mock('../api', () => ({
-    someMethod: jest.fn(() => Promise.resolve({}))
-  }));
+    getLeagues: jest.fn(() => Promise.resolve([]))
+}));
 
-test('LeagueUpdateForm renders without crashing', () => {
+test('LeagueList renders without crashing', () => {
   render(
     <MemoryRouter>
       <LeagueList />
     </MemoryRouter>
   );
 });
+
