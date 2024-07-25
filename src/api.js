@@ -9,7 +9,7 @@ class LeagueOneApi {
   static async request(endpoint, data = {}, method = 'get') {
     console.log(`API Request: ${method.toUpperCase()} ${endpoint}`);
     console.log(`API Request Data: `, data);
-    const url = `http://localhost:3001/${endpoint}`;
+    const url = `${BASE_URL}/${endpoint}`;
     
     // Added Authorization header with Bearer token
     const headers = {
